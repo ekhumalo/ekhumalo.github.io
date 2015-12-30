@@ -5,6 +5,10 @@ html, body {
     
     /* The universe is black */
     background: url("stars.jpg");
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: top center;
+    width: 100%;
 }
 
 #sun {
