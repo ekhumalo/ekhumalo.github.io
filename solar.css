@@ -1,0 +1,296 @@
+html, body {
+    /* The universe takes up all available space */
+    width: 100%;
+    height: 100%;
+    
+    /* The universe is black */
+    background: url("stars.jpg");
+}
+
+#sun {
+    position: absolute;
+    /* Positions the top-left corner of the image to be *
+    /* in the middle of the box */
+    top: 50%;
+    left: 50%;
+     border-color: transparent;
+  border-width: 0px;
+  border-style: dotted;
+  border-radius: 50%;
+  box-shadow: 0 0 512px red;
+    
+    /* Play with these numbers to see what it does */
+    height: 100px;
+    width: 100px;
+    margin-top: -50px; 
+    margin-left: -50px;
+}
+
+#mercury {
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    height: 15px;
+    width: 15px;
+    margin-left: -25px;
+    margin-top: -25px;
+    /* Style your earth */
+}
+
+#mercury-orbit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: 300px;
+    height: 300px;
+    margin-top: -150px;
+    margin-left: -150px;
+
+    border-width: 2px;
+    border-radius: 1000%;
+      -webkit-animation: spin-right 2.41s linear infinite;
+     -moz-animation: spin-right 2.41s linear infinite;
+      -ms-animation: spin-right 2.41s linear infinite;
+       -o-animation: spin-right 2.41s linear infinite;
+          animation: spin-right 2.41s linear infinite;
+}
+#venus {
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    height: 20px;
+    width: 20px;
+    margin-left: -25px;
+    margin-top: -25px;
+    /* Style your earth */
+}
+
+#venus-orbit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: 400px;
+    height: 400px;
+    margin-top: -200px;
+    margin-left: -200px;
+
+    border-width: 2px;
+    border-radius: 1000%;
+      -webkit-animation: spin-right 6.15s linear infinite;
+     -moz-animation: spin-right 6.15s linear infinite;
+      -ms-animation: spin-right 6.15s linear infinite;
+       -o-animation: spin-right 6.15s linear infinite;
+          animation: spin-right 6.15s linear infinite;
+        }
+
+#earth {
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    height: 25px;
+    width: 25px;
+    margin-left: -25px;
+    margin-top: -25px;
+    /* Style your earth */
+}
+
+
+#earth-orbit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: 500px;
+    height: 500px;
+    margin-top: -250px;
+    margin-left: -250px;
+
+    border-width: 2px;
+    border-radius: 50%;
+      -webkit-animation: spin-right 10s linear infinite;
+     -moz-animation: spin-right 10s linear infinite;
+      -ms-animation: spin-right 10s linear infinite;
+       -o-animation: spin-right 10s linear infinite;
+          animation: spin-right 10s linear infinite;
+    /* For Section #2 */
+}
+
+
+#mars {
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    height: 25px;
+    width: 25px;
+    margin-left: -25px;
+    margin-top: -25px;
+    /* Style your earth */
+}
+
+#mars-orbit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: 600px;
+    height: 600px;
+    margin-top: -300px;
+    margin-left: -300px;
+
+    border-width: 2px;
+    border-radius: 1000%;
+      -webkit-animation: spin-right 18.8s linear infinite;
+     -moz-animation: spin-right 18.8s linear infinite;
+      -ms-animation: spin-right 18.8s linear infinite;
+       -o-animation: spin-right 18.8s linear infinite;
+          animation: spin-right 18.8s linear infinite;
+}
+
+#jupiter {
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    height: 50px;
+    width: 50px;
+    margin-left: -25px;
+    margin-top: -25px;
+    /* Style your earth */
+}
+
+#jupiter-orbit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: 700px;
+    height: 700px;
+    margin-top: -350px;
+    margin-left: -350px;
+
+    border-width: 2px;
+    border-radius: 1000%;
+      -webkit-animation: spin-right 36.3s linear infinite;
+     -moz-animation: spin-right 36.3s linear infinite;
+      -ms-animation: spin-right 36.3s linear infinite;
+       -o-animation: spin-right 36.3s linear infinite;
+          animation: spin-right 36.3s linear infinite;
+}
+
+#saturn {
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    height: 50px;
+    width: 50px;
+    margin-left: -25px;
+    margin-top: -25px;
+    /* Style your earth */
+}
+
+#saturn-orbit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: 800px;
+    height: 800px;
+    margin-top: -400px;
+    margin-left: -400px;
+
+    border-width: 2px;
+    border-radius: 1000%;
+      -webkit-animation: spin-right 41.7s linear infinite;
+     -moz-animation: spin-right 41.7s linear infinite;
+      -ms-animation: spin-right 41.7s linear infinite;
+       -o-animation: spin-right 41.7s linear infinite;
+          animation: spin-right 41.7s linear infinite;
+}
+
+#uranus {
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    height: 50px;
+    width: 50px;
+    margin-left: -25px;
+    margin-top: -25px;
+    /* Style your earth */
+}
+
+#uranus-orbit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: 900px;
+    height: 900px;
+    margin-top: -450px;
+    margin-left: -450px;
+
+    border-width: 2px;
+    border-radius: 1000%;
+      -webkit-animation: spin-right 53.5s linear infinite;
+     -moz-animation: spin-right 53.5s linear infinite;
+      -ms-animation: spin-right 53.5s linear infinite;
+       -o-animation: spin-right 53.5s linear infinite;
+          animation: spin-right 53.5s linear infinite;
+}
+
+#neptone {
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    height: 35px;
+    width: 35px;
+    margin-left: -25px;
+    margin-top: -25px;
+    /* Style your earth */
+}
+
+#neptone-orbit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: 1000px;
+    height: 1000px;
+    margin-top: -500px;
+    margin-left: -500px;
+
+    border-width: 2px;
+    border-radius: 1000%;
+      -webkit-animation: spin-right 83.7s linear infinite;
+     -moz-animation: spin-right 83.7s linear infinite;
+      -ms-animation: spin-right 83.7s linear infinite;
+       -o-animation: spin-right 83.7s linear infinite;
+          animation: spin-right 83.7s linear infinite;
+}
+
+
+@-webkit-keyframes spin-right {
+  100% {
+    -webkit-transform: rotate(360deg);
+       -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+         -o-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-right {
+  100% {
+    -webkit-transform: rotate(360deg);
+       -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+         -o-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+
+
+
+
+
