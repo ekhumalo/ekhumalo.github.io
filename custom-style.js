@@ -19,7 +19,7 @@ jQuery(document).ready(function($) {
     });
 
     
-   /* $("#demo-custom").click(function(){
+    $("#demo-custom").click(function(){
         if($(".style-container").css('right') == '0px'){
             $(".style-container").stop().animate({right:'-205px'},300);
         }
@@ -28,5 +28,5 @@ jQuery(document).ready(function($) {
         }
   //  });
 
-});*//
+});
 
