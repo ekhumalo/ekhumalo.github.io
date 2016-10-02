@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+		<title>MCF STEM CLUSTER</title>
+		
+		
+	
+<link media="all" href="index.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+	<div id="body">
+	<div id="body2">
+	<center><h1>STEM CLUSTER</h1></center>
+	<div class="laptop">
+		<div class="content">
+			<div id="code">
+				<div id="shell">
+					Welcome! :D<br><br>
+					Base site for MCF Stem Cluster<br><br>
+					(Type 'powerpoint')<br>
+					<input id="cmd" value="" onkeydown="if (event.keyCode == 13) redirect();" autofocus="" style="font-family: &quot;Monaco&quot;,&quot;Courier New&quot;; color: rgb(255, 255, 255); background-color: rgb(56, 55, 55); border: 0px none;" type="text">
+				</div>
+			</div>
+		</div>
+		<div class="btm"></div>
+	</div>
+	</div>
+	</div>
+	
+	<script>
+		function redirect(){
+			var command = document.getElementById('cmd');
+			if(command != null){
+				if(command.value.toLowerCase() == 'powerpoint'){
+					document.body.style.backgroundColor = "#8b9dc3";
+					var win = window.open('https://docs.google.com/presentation/d/14WlLBKqbJ6NpnBxjhQTMbOp_B9JGTeZTNpM1MXrvPCQ/edit#slide=id.gbcf2d123c_0_0', '_blank');
+					win.focus();
+				}
+			}
+		}
+		/*window.onscroll = function(){
+			var scroll = window.scrollY;
+			$('#body2').css('left', '-' + scroll + 'px');
+		}*/
+	</script>
+	<script src="jquery.min.js"></script>
+	<script type="text/javascript" src="jquery.mousewheel.min.js"></script>
+	</body>
+</html>
