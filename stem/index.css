@@ -1,0 +1,24 @@
+/* ::::: http://cindyhoang.net/css/style.css ::::: */
+
+html {  }
+body { background: rgb(120, 194, 169) none repeat scroll 0% 0%; }
+#body { overflow: hidden; }
+#body2 { width: 100%; height: 100%; }
+h1 { font-family: "Montserrat",sans-serif; font-size: 20px; color: white; text-transform: uppercase; }
+#code { border-radius: 5px; width: 550px; margin-left: 30px; margin-top: 30px; padding-top: 15px; background: rgb(204, 204, 204) none repeat scroll 0% 0%; height: 100px; font-family: "Monaco","Courier New"; text-align: left; font-size: 13px; color: rgb(250, 250, 250); }
+#shell { width: 510px; padding: 20px; height: 240px; margin: 0px auto; background: rgb(56, 55, 55) none repeat scroll 0% 0%; }
+.laptop { width: 846px; height: 471px; background: rgb(232, 232, 89) none repeat scroll 0% 0%; border: 43px solid rgb(32, 32, 32); border-radius: 36px 36px 0px 0px; position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px; margin: auto; }
+.laptop::before { top: -21px; }
+.laptop > div { position: absolute; }
+.laptop > .content { width: 190px; height: 118px; left: 0px; margin-left: 0px; }
+.btm { width: 1065px; height: 25px; bottom: -68px; left: 50%; margin-left: -532px; border-radius: 0px 0px 72px 72px; background: rgb(216, 216, 206) none repeat scroll 0% 0%; z-index: 1; }
+.btm::before { content: ""; position: absolute; width: 151px; height: 10px; left: 50%; top: 0px; margin-left: -84px; border-radius: 0px 0px 18px 18px; background: rgb(149, 149, 129) none repeat scroll 0% 0%; }
+/* ::::: https://fonts.googleapis.com/css?family=Montserrat ::::: */
+
+@font-face {
+	font-family: "Montserrat";
+	font-style: normal;
+	font-weight: 400;
+	src: local("Montserrat-Regular"), url('zhcz-_wihjsqc0ohj9tcyazydmxhdd8saj6oajtfsbi.woff2') format("woff2");
+	unicode-range: U+0-FF, U+131, U+152-153, U+2C6, U+2DA, U+2DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
