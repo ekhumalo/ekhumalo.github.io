@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<embed src="sweet.mp3" autostart="true" loop="true"
+width="2" height="0">
+</embed>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>Happy Birthday Pootey</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<style type="text/css">
+		@font-face {
+			font-family: digit;
+			src: url('digital-7_mono.ttf') format("truetype");
+		}
+	</style>
+	<link href="css/default.css" type="text/css" rel="stylesheet">
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/garden_dev.js"></script>
+    <script type="text/javascript" src="js/functions_dev.js"></script>
+    <meta property="og:title" content="Happy 26th Birthday"/>
+	<meta property="og:url" content="http://erickhumalo.com/pootey/"/>
+	<meta property="og:description" content="Mbongeni Bethwell Phuthi"/>
+	<meta property="og:image" content="pootey.jpg"/>
+	<meta property="og:image:width" content="1200"/>
+	<meta property="og:image:height" content="855"/>
+	<meta property="og:locale" content="en_US"/>
+</head>
+
+<body>
+	<div id="mainDiv">
+		<div id="content">
+			<div id="code">
+				<span class="comments">/**</span><br />
+				<span class="space"/><span class="comments">* Today, the 5th day of April, is your birthday.</span><br />
+				<span class="space"/><span class="comments">* So I created a page to celebrate this extraordinary day.</span><br />
+				<span class="space"/><span class="comments">*/</span><br />
+				Boy u = <span class="keyword">new</span> Boy(<span class="string">"Mbongeni Bethwell Phuthi"</span>);<br />
+				<span class="comments">// April 5, 1992, unto the Phuthi family a son was born</span><br />
+				Date currentTime = <span class="keyword">new</span> Date(); <br />
+				SimpleDateFormat formatter = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy-MM-dd HH:mm:ss"</span>);<br />
+				String dateString = formatter.format(currentTime);<br />
+				if( dateString.equals(<span class="string">"1992-04-05 00:00:00"</span>) ){</br>
+					u.age ++;</br>
+				}</br>
+				<span class="comments">// My blessing will be with you simultaneously.</span><br />
+				<span class="keyword">new</span> Thread (){<br />
+				@Override </br>
+				<span class="comments">// Forever and ever. I wish</span><br />
+				while(true){</br>
+				<span class="comments">// luckiness,</span><br />
+				u.fortune ++;</br>
+				<span class="comments">// happiness,</span><br />
+				u.happiness ++;</br>
+			    <span class="comments">// and everything you wish can be achieved.</span><br />
+				}.start()</br>
+				<span class="comments">// A message from me</a>....:</span><br />
+				System.out.println(<span class="string">"Thanks for being an awesome friend, brother and inspiring person you are. Kodwa ndoda sokumele ubone okomuzi please! Simelele wena ukuba uvule indlela!"</span>);
+			</div>
+			<div id="loveHeart">
+				<canvas id="garden"></canvas>
+				<div id="words">
+					<div id="messages">
+					</br>
+					</br>
+					</br>
+					</br>
+						You've been in the world for
+						<div id="elapseClock"></div>
+					</div>
+					<div id="loveu">
+						May you have a year full of love, peace and happiness.<br/>
+						<div class="signature">- Eric Khumz</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var offsetX = $("#loveHeart").width() / 2;
+		var offsetY = $("#loveHeart").height() / 2 - 55;
+		var together = new Date();
+		together.setFullYear(1992,4, 5);
+		together.setHours(0);
+		together.setMinutes(0);
+		together.setSeconds(0);
+		together.setMilliseconds(0);
+		
+		if (!document.createElement('canvas').getContext) {
+			var msg = document.createElement("div");
+			msg.id = "errorMsg";
+			msg.innerHTML = "Your browser doesn't support HTML5!<br/>Recommend use Chrome 14+/IE 9+/Firefox 7+/Safari 4+"; 
+			document.body.appendChild(msg);
+			$("#code").css("display", "none")
+			$("#copyright").css("position", "absolute");
+			$("#copyright").css("bottom", "10px");
+		    document.execCommand("stop");
+		} else {
+			setTimeout(function () {
+				startHeartAnimation();
+			}, 5000);
+
+			timeElapse(together);
+			setInterval(function () {
+				timeElapse(together);
+			}, 500);
+
+			adjustCodePosition();
+			$("#code").typewriter();
+		}
+	</script>
+</body>
+</html>
