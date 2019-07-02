@@ -1,5 +1,10 @@
 """The Game of Hog."""
 
+#Fill in your name and surname
+name = ""
+surname = ""
+assignment = "hog"
+
 from dice import four_sided, six_sided, make_test_dice
 from ucb import main, trace, log_current_line, interact
 
