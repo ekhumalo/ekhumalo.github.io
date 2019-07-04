@@ -82,12 +82,7 @@ def has_seven(k):
     >>> has_seven(7777)
     True
     """
-    if k % 10 == 7:
-        return True
-    elif k < 10:
-        return False
-    else:
-        return has_seven(k // 10)
+    "*** YOUR CODE HERE ***"
 
 
 def count_change(amount):
