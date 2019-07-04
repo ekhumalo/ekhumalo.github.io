@@ -176,7 +176,12 @@ contains the digit 7 at least once.</p>
     &gt;&gt;&gt; has_seven(7777)
     True
     &quot;&quot;&quot;
-    "*** YOUR CODE HERE ***"</code></pre>
+    if k % 10 == 7:
+        return True
+    elif k &lt; 10:
+        return False
+    else:
+        return has_seven(k // 10)</code></pre>
 
 <h3 class="question" id="q3">Question 3: Count change</h3>
 
