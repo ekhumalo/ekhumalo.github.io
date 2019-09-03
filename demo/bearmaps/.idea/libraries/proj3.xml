@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="proj3">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src.zip!/" />
+      <root url="jar://$PROJECT_DIR$/src 5.zip!/" />
+      <root url="jar://$PROJECT_DIR$/src 2.zip!/" />
+      <root url="jar://$PROJECT_DIR$/src 3.zip!/" />
+      <root url="jar://$PROJECT_DIR$/src 6.zip!/" />
+      <root url="jar://$PROJECT_DIR$/src 4.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
