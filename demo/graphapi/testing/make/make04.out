@@ -1,3 +1,0 @@
-	yacc -o foo.c foo.y
-        gcc -g -c foo.o foo.c
-	gcc -o foo foo.o
