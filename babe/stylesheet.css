@@ -1,7 +1,5 @@
 body {
-	/*background-color: #FFDAB9;
-	background-color: #000; */
-	background-image: url(start.jpeg) no-repeat center center fixed;
+	background-color: #000;
 	-webkit-transition:background-color linear 5s;
 	-moz-transition:background-color linear 5s;
 	-o-transition:background-color linear 5s;
@@ -15,6 +13,7 @@ body {
 .peach {
 	/*background-color: #FFDAB9;*/
 	background-image: url(karen.jpeg);
+	background-size:cover;
 	
 }	
 .peach-after {
