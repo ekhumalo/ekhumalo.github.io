@@ -12,11 +12,11 @@ body {
 }
 .peach {
 	/*background-color: #FFDAB9;*/
-	background-image: url(karen.jpeg) no-repeat center center fixed;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
+	background-image: url(karen.jpeg);
+	-webkit-background-size: 125%;
+	-moz-background-size: 125%;
+	-o-background-size: 125%;
+	background-size: 125%;
 	
 }	
 .peach-after {
