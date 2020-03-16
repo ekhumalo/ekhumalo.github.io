@@ -1,7 +1,7 @@
 body {
 	/*background-color: #FFDAB9;
 	background-color: #000; */
-	background-image: url(start.jpeg);
+	background-image: url(start.jpeg) no-repeat center center fixed;
 	-webkit-transition:background-color linear 5s;
 	-moz-transition:background-color linear 5s;
 	-o-transition:background-color linear 5s;
