@@ -1,0 +1,1016 @@
+/*==============================================================================
+
+version:  1.0
+date:	  01/01/16
+author:   Capisce Design Inc.
+email:    capisce@capiscedesign.com
+website:  http://www.capiscedesign.com/
+
+==============================================================================*/
+
+
+* {
+	margin: 0;
+	padding: 0;
+}
+html {
+    /*background:url("../images/bg_repeat.jpg") #fff center top repeat-x;*/
+}
+
+body { /* Center layout */
+	text-align: center;
+	}
+	
+#wrapper {
+	width:100%;
+	height:100%;
+    display:block;
+    margin: 62px auto 0; /* Center layout */
+	text-align: left; /* Center layout */
+    max-width: 971px;
+    position: relative;
+	}
+
+.tophline {
+    width:100%;
+    position: absolute;
+    height:1px;
+    border-top:1px solid #ccc;
+    z-index: 0;
+    top:50%;
+}
+/*============================================================================== 
+ * Typography
+==============================================================================*/
+
+@font-face {
+    font-family: 'latoblack';
+    src: url('../fonts/Lato-Black-webfont.eot');
+    src: url('../fonts/Lato-Black-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/Lato-Black-webfont.woff2') format('woff2'),
+         url('../fonts/Lato-Black-webfont.woff') format('woff'),
+         url('../fonts/Lato-Black-webfont.ttf') format('truetype'),
+         url('../fonts/Lato-Black-webfont.svg#latoblack') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'latobold';
+    src: url('../fonts/Lato-Bold-webfont.eot');
+    src: url('../fonts/Lato-Bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/Lato-Bold-webfont.woff2') format('woff2'),
+         url('../fonts/Lato-Bold-webfont.woff') format('woff'),
+         url('../fonts/Lato-Bold-webfont.ttf') format('truetype'),
+         url('../fonts/Lato-Bold-webfont.svg#latobold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'latoregular';
+    src: url('../fonts/Lato-Regular-webfont.eot');
+    src: url('../fonts/Lato-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/Lato-Regular-webfont.woff2') format('woff2'),
+         url('../fonts/Lato-Regular-webfont.woff') format('woff'),
+         url('../fonts/Lato-Regular-webfont.ttf') format('truetype'),
+         url('../fonts/Lato-Regular-webfont.svg#latoregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'latolight';
+    src: url('../fonts/Lato-Light-webfont.eot');
+    src: url('../fonts/Lato-Light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/Lato-Light-webfont.woff2') format('woff2'),
+         url('../fonts/Lato-Light-webfont.woff') format('woff'),
+         url('../fonts/Lato-Light-webfont.ttf') format('truetype'),
+         url('../fonts/Lato-Light-webfont.svg#latolight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family:"latoregular", Arial, sans-serif;
+	font-size: 12px;
+}
+
+a {
+	font-family:"latoregular", Arial, sans-serif;
+	color: #222;
+    text-decoration: none;
+	}
+	
+a:link {
+	color: #222;
+	}	
+	
+a:visited {
+	color: #222;
+	}	
+	
+a:hover {
+	color: #d2b55b;
+	}	
+	
+a:active {
+	color: #d2b55b;
+	}	
+				
+p {
+	font-family:"latoregular", Arial, sans-serif;
+	font-size:14px;
+	color:#222;
+	line-height:1.75em;
+}
+
+h1 {
+    font-family:"latoregular", Arial, sans-serif;
+    color:#d2b55b;
+    text-transform: uppercase;
+    letter-spacing: .25em;
+    font-size:21px;
+    text-align:left;
+    font-weight: normal;
+}
+
+h2 {
+    font-family:"latoregular", Arial, sans-serif;
+    color:#222;
+    font-size:13px;
+    letter-spacing: .15em;
+    font-weight: normal;
+}
+
+/*============================================================================== 
+ * Header
+==============================================================================*/
+
+#header {
+	height:88px;
+	background-color:#fff;
+	/*position:fixed;*/
+	/*top:0;*/
+	/*left:0;*/
+	width:100%;
+	margin:0;
+	padding:0;
+    z-index: 50;
+    border-bottom: 1px solid #ccc;
+}
+
+#header_wrap{
+	/*max-width:900px;*/
+    margin: 0 auto;
+    max-width: 971px;
+    width: 100%;
+    position: relative;
+    height:88px;
+}
+
+#logo {
+	float: left;
+    width:100%;
+    height:auto;
+	max-width: 281px;
+	max-height: 109px;
+	margin-top:35px;
+	}
+
+#logo_wrapper {
+    width:95%;
+}
+.nav {
+    float:right;
+}
+.nav li {
+    display:inline;
+    float:left;
+}
+.nav li a {
+    font-family: "latobold", Arial, sans-serif;
+    font-size:11px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    padding:12px 15px;
+    margin:0 15px;
+    display:block;
+}
+#main_nav {
+	/*float:right;*/
+    height: 12px;
+    font-size: 12px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    position: absolute;
+    bottom: -13px;
+    right: 0;
+}
+
+#main_nav a {
+	text-decoration:none;
+}
+.divider {
+	height:62px;
+	width:1px;
+	display:block;
+	border-left:1px dotted #666;
+	float:left;
+	margin:0 18px 0 17px;
+}
+
+/*#btn_home {*/
+	/*width:25px;*/
+	/*height:25px;*/
+	/*overflow:hidden;*/
+	/*background: url(../images/icons.png) top left no-repeat;*/
+	/*margin: 18px 0;*/
+    /*float: left;*/
+/*}*/
+/*#btn_home a {*/
+	/*float: left;*/
+    /*width:25px;*/
+    /*height:25px;*/
+	/*display:block;*/
+    /*text-indent: -5555px;*/
+/*}*/
+/*#btn_home:hover {*/
+	/*background-position:0 -25px;*/
+/*}*/
+/*#btn_services {*/
+	/*color:#000;*/
+	/*background-color:#999;*/
+	/*padding:14px 20px;*/
+	/*border:1px solid #ecc0cc;*/
+	/*display:block;*/
+	/*float:left;*/
+	/*margin-left: 8px;*/
+	/*margin-top: 8px;*/
+/*}*/
+/*#btn_services:hover {*/
+	/*background-color:#fff;*/
+/*}*/
+/*#btn_contact {*/
+	/*color:#fff;*/
+	/*background-color:#000;*/
+	/*padding:14px 20px;*/
+	/*border:1px solid #ecc0cc;*/
+	/*display:block;*/
+	/*float:left;*/
+	/*margin-left:30px;*/
+	/*margin-top: 8px;*/
+/*}*/
+/*#btn_contact:hover {*/
+	/*color:#ecc0cc;*/
+	/*border:1px solid #fff;*/
+	/*background-color:#222;*/
+/*}*/
+#label_gallery {
+    margin-left: 15px;
+    color: #d2b55b;
+    font-family: "latobold", Arial, sans-serif;
+    font-size:11px;
+    letter-spacing: .2em;
+    padding:12px 5px 12px 15px;
+    display:block;
+}
+#btn_instagram {
+	width:25px;
+	height:25px;
+	overflow:hidden;
+	background: url(../images/icons.png) top left no-repeat;
+	background-position:0 0;
+	margin: 6px 0px;
+}
+#btn_instagram a {
+    width:25px;
+    height:25px;
+	display:block;
+    text-indent: -5555px;
+    margin:0;
+    padding:0;
+}
+#btn_instagram:hover {
+	background-position:0 -25px;
+}
+#btn_yelp {
+	width:50px;
+	height:25px;
+	overflow:hidden;
+	background: url(../images/icons.png) top left no-repeat;
+	background-position:-25px 0;
+	margin:4px 0 4px 14px;
+}
+#btn_yelp a {
+    width:50px;
+    height:25px;
+	display:block;
+    text-indent: -5555px;
+    margin:0;
+    padding:0;
+}
+#btn_yelp:hover {
+	background-position:-25px -25px;
+}
+/*.btn_translate {*/
+	/*float:left;*/
+	/*margin-left:0;*/
+	/*color:#fff;*/
+	/*height:62px;*/
+	/*line-height:62px;*/
+/*}*/
+/*#label_translate {*/
+	/*float:left;*/
+	/*margin-right:10px;*/
+/*}*/
+/*.translate_control {*/
+	/*float:left;*/
+	/*margin-right:20px;*/
+/*}*/
+/*.translate_control a {*/
+	/*color:#ecc0cc;*/
+/*}*/
+/*.translate_control a:visited {*/
+	/*color:#ecc0cc;*/
+/*}*/
+/*.translate_control a:hover {*/
+	/*color:#fff;*/
+/*}*/
+/*.translate_control a:active {*/
+	/*color:#fff;*/
+/*}*/
+
+
+/*============================================================================== 
+ * Content
+==============================================================================*/
+
+#promo {
+    max-width:971px;
+    max-height:574px;
+    position:relative;
+    margin:144px auto 56px;
+}
+#content {
+	padding: 0 0 0 0;
+	width:400px;
+	position: absolute;
+	top: 200px;
+	right: 200px;
+    z-index: 40;
+	 }
+#promocontent {
+	padding: 0 0 0 0;
+	position: absolute;
+	top: 200px;
+	right: 65px;
+    z-index: 40;
+    width: 330px;
+ }
+ .highlight {
+	 color:#b89f52;
+ }
+ .dark_highlight {
+     color:#faa1b9;
+ }
+ .bold {
+ 	font-family:"latobold", Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif;
+ }
+#icon_scissors {
+	background: url(../images/icons.png) top left no-repeat;
+	width:25px;
+	height:25px;
+	background-position:-75px 0 ;
+	margin:0 auto 10px;
+	padding-right:12px;
+}
+a.btn_about_linatey {
+    color: #222;
+    text-transform: uppercase;
+    text-decoration: none;
+    float: right;
+    font-size: 16px;
+    letter-spacing: .1em;
+    margin-top: 30px;
+    margin-right: 20px;
+}
+a.btn_about_linatey:hover {
+    color: #d2b55b;
+}
+a.btn_about_linatey:active {
+    color: #d2b55b;
+}
+#inline {
+	max-width:486px;
+    width:100%;
+	background-color:#222;
+	text-align:left;
+}
+#inline p {
+	padding:10px 20px;
+	line-height:1.5em;
+}
+.hline {
+	width:100%;
+	height:1px;
+	border-top:1px dotted #d2b55b;
+	margin:19px 0 20px 0;
+}
+
+#small_bg {
+    display: none;
+}
+#inline p {
+   color:#fff;
+}
+#phone {
+    font-size:13px;
+    letter-spacing:.2em;
+    float:right;
+    margin-top:34px;
+    padding-left:28px;
+}
+#phone a {
+    text-decoration: none;
+    line-height: 24px;
+}
+#icon_phone {
+    background:url("../images/icons.png") center top no-repeat;
+    width:25px;
+    height:25px;
+    overflow:hidden;
+    background-position: -75px 0;
+    float:left;
+}
+
+#address {
+    float:right;
+    letter-spacing: .2em;
+    font-size:12px;
+    text-transform: uppercase;
+}
+#email {
+    float:left;
+    font-size:12px;
+    text-transform: uppercase;
+}
+#icon_email {
+    background:url("../images/icons.png") center top no-repeat;
+    width:26px;
+    height:25px;
+    overflow:hidden;
+    background-position: -100px 0;
+    float:left;
+    margin-right: 10px;
+    float: left;
+    margin-top:-6px;
+}
+#email a {
+    text-transform: uppercase;
+    letter-spacing: .2em;
+}
+
+/*==============================================================================
+* Footer
+==============================================================================*/
+
+
+#footer_wrapper {
+    width:100%;
+    max-width:921px;
+    margin:0 auto;
+    border-top:1px solid #ccc;
+    padding:20px 0;
+}
+#footer,
+#copyright {
+	clear: both;
+	padding:0;
+	width:100%;
+	}
+
+.footer_text {
+    clear:both;
+    padding:10px;
+    font-size:9px;
+    letter-spacing:.1em;
+    line-height:1.25em;
+    text-align: center;
+    padding-top:80px;
+}
+.footer_text a {
+    color: #d2b55b;
+}
+
+/*==============================================================================
+* Contact
+==============================================================================*/
+
+#contact_page #wrapper {
+    margin-top:144px;
+}
+#contact_content {
+    width:100%;
+    font-size:14px;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+}
+#contact_content p {
+    text-align:center;
+}
+.lower {
+    text-transform: lowercase;
+    letter-spacing: .1em;
+}
+#map {
+
+}
+.map_link {
+    display:block;
+    max-width:971px;
+    max-height:278px;
+    margin:0 auto;
+}
+#directions_bar {
+    width:100%;
+    text-align:center;
+    display:block;
+    padding:10px 0;
+    text-transform: uppercase;
+    letter-spacing: .25em;
+    margin-top:34px;
+}
+.input_bar {
+    font-family: "latoregular", Arial, sans-serif;
+    border: 1px solid #999;
+    background: none;
+    max-width: 330px;
+    width:85%;
+    font-size: 11px;
+    padding: 7px;
+    color: #ccc;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+}
+.submit_btn {
+    font-family:"latoregular", Arial, sans-serif;
+    width:94px;
+    text-align:center;
+    border:1px solid #e1cf96;
+    background:none;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    padding:7px;
+    font-size:11px;
+    cursor:pointer;
+}
+
+.vline {
+    height: 110px;
+    width:1px;
+    border-right:1px solid #000;
+    margin:10px auto;
+    position: relative;
+}
+.addressline {
+    letter-spacing: .2em;
+    margin-top:100px;
+}
+#contact_content h1 {
+    padding-top:40px;
+}
+
+.phoneline {
+    padding-top: 46px;
+    letter-spacing: .2em;
+}
+.emailline {
+    letter-spacing:.2em;
+    padding-top:46px;
+    padding-bottom: 100px;
+}
+.emailline a {
+    letter-spacing:.2em;
+}
+.emailline a:hover,
+.emailline a:hover .highlight,
+#email a:hover,
+#email a:hover .highlight{
+    color:#8c793d;
+}
+
+
+/*==============================================================================
+* SERVICES
+==============================================================================*/
+
+body#services_page #wrapper {
+    max-width:824px;
+    margin-top:144px;
+}
+
+#services_rt_col {
+    width:315px;
+    float:right;
+    /*padding-top:50px;*/
+    padding-bottom: 50px;
+}
+#services_rt_col p {
+    font-size:12px;
+}
+#services_img {
+    max-width: 315px;
+    max-height: 190px;
+}
+#olaplex {
+    overflow: hidden;
+}
+#olaplex_logo {
+    border-right:1px solid #e1cf96;
+    max-width:133px;
+    max-height:76px;
+    float:left;
+}
+#olaplex p {
+    margin-left: 10px;
+    text-align: left;
+    float: left;
+    font-size: 11px;
+}
+#services_content {
+    width:95%;
+    max-width:440px;
+    /*position: absolute;*/
+    /*top:150px;*/
+    /*left:100px;*/
+    margin-left:5%;
+    float:left;
+    display:block;
+}
+#services_content h1 {
+    padding-bottom:30px;
+}
+
+.menu {
+    width:95%;
+    max-width:440px;
+}
+
+.price_box {
+    background-color:#fbf8ef;
+    padding:10px;
+    margin:0px auto 20px;
+    width: 95%;
+    text-align:center;
+}
+.price_table {
+    font-family:"latoregular", Arial, sans-serif;
+    color:#222;
+    font-size:13px;
+    line-height: 1.25em;
+}
+.price_table td {
+    padding:10px 0;
+}
+.services_note {
+    color:#d2b55b;
+    padding:40px 0 100px 0;
+    font-size:11px;
+    letter-spacing: .05em;
+}
+#hair_div:hover h2,
+#styling_div:hover h2,
+#color_div:hover h2,
+#specialcolor_div:hover h2,
+#highlight_div:hover h2,
+#perm_div:hover h2,
+#extension_div:hover h2
+{
+    color:#d2b55b;
+}
+
+
+/*==============================================================================
+* MOBILE
+==============================================================================*/
+
+@media (max-width: 960px) {
+    #logo {
+        margin-left: 20px;
+    }
+    #phone {
+        margin-right:20px;
+    }
+    #main_nav {
+        margin-right: 20px;
+    }
+}
+
+@media (max-width: 880px) {
+    #promocontent {
+        top: 170px;
+        right: 75px;
+    }
+
+    #promocontent p {
+        font-size: 13px;
+    }
+
+    a.btn_about_linatey {
+        font-size: 15px;
+    }
+    .nav li a {
+        font-size:11px;
+        letter-spacing: .2em;
+        padding:12px 10px;
+        margin:0 4px;
+    }
+    #label_gallery {
+        margin-left: 0;
+        font-size:11px;
+        letter-spacing: .2em;
+        padding:12px 5px 12px 15px;
+    }
+}
+
+@media (max-width: 810px) {
+
+    body#services_page #wrapper {
+        margin-top: 130px;
+    }
+    #services_content {
+        margin: 0 auto;
+        clear: both;
+        float: none;
+    }
+    #services_rt_col {
+        clear: both;
+        margin: 0 auto;
+        float: none;
+    }
+    #logo {
+        max-width: 200px;
+        margin-left:10px;
+        margin-top:50px;
+    }
+
+    #phone {
+        margin-top:14px;
+        margin-right:10px;
+    }
+    #main_nav {
+        bottom: 23px;
+        right:10px;
+    }
+    #header {
+         position: fixed;
+         top: 0;
+         left: 0;
+    }
+    #email {
+        float: none;
+        clear: both;
+        margin: 0 auto;
+        width: 298px;
+    }
+    #address {
+        clear: both;
+        float: none;
+        width: 100%;
+        text-align: center;
+        padding-top: 20px;
+    }
+    .footer_text {
+        padding-top:40px;
+    }
+    .smk_accordion {
+        margin:0 auto 20px !important;
+    }
+    #services_rt_col {
+        max-width: 315px;
+        width: 95%;
+    }
+    .footer_text {
+        padding-top:20px;
+    }
+
+    #promocontent {
+        top: 80px;
+        right: 35px;
+    }
+    #promocontent p {
+        font-size:13px;
+    }
+    a.btn_about_linatey {
+        font-size:15px;
+    }
+    .footer_text {
+        font-size: 6px;
+    }
+}
+
+@media (max-width: 665px) {
+    .nav li a {
+        font-size:11px;
+        letter-spacing: .2em;
+        padding:12px 8px;
+        margin:0 2px;
+    }
+    #label_gallery {
+        margin-left: 0;
+        font-size:11px;
+        letter-spacing: .2em;
+        padding:12px 5px 12px 5px;
+    }
+    #promocontent {
+        top: 80px;
+        right: 35px;
+        width: 240px;
+    }
+    #promocontent p {
+        font-size:13px;
+        line-height: 1.75em !important;
+    }
+    a.btn_about_linatey {
+        font-size:15px;
+        margin-top: 14px;
+    }
+}
+@media (max-width: 635px) {
+    #logo {
+        max-width: 150px;
+        margin-left:10px;
+        margin-top:50px;
+    }
+    #header_wrap,
+    #header {
+        height:80px;
+    }
+}
+@media (max-width: 586px) {
+    #btn_home {
+        background:url('../images/icon_home.png') center center no-repeat;
+        width:20px;
+        height:18px;
+        padding:5px;
+        overflow:hidden;
+        text-indent: -5555px;
+    }
+    .nav li a {
+        font-size:11px;
+        letter-spacing: .15em;
+        padding:12px 8px;
+        margin:0 2px;
+    }
+    #label_gallery {
+        margin-left: 0;
+        font-size:11px;
+        letter-spacing: .15em;
+        padding:12px 5px 12px 5px;
+    }
+    #promocontent {
+        top: 20px;
+        right: 35px;
+        width: 210px;
+    }
+    #promocontent p {
+        font-size:12px;
+        line-height: 1.75em !important;
+    }
+    a.btn_about_linatey {
+        font-size:14px;
+        margin-top: 14px;
+    }
+    .input_bar {
+        margin:20px 0;
+    }
+}
+@media (max-width: 533px) {
+    #main_nav {
+        margin-right:0px;
+    }
+}
+@media (max-width: 512px) {
+    #promocontent {
+        top: 20px;
+        right: 35px;
+        width: 180px;
+    }
+    #promocontent p {
+        font-size:12px;
+        line-height: 1.5em !important;
+    }
+    a.btn_about_linatey {
+        font-size: 13px;
+        margin-top: 11px;
+    }
+    #address .highlight {
+        display:none;
+    }
+    #main_nav {
+        bottom: 60px;
+        right: 15px;
+    }
+    #phone {
+        margin-top: 50px;
+        margin-right: 10px;
+        padding-left:0;
+    }
+}
+@media (max-width: 442px) {
+    #promocontent {
+        top: 20px;
+        right: 35px;
+        width: 180px;
+    }
+
+    #promocontent p {
+        font-size: 10px;
+        line-height: 1.5em !important;
+    }
+
+    a.btn_about_linatey {
+        font-size: 12px;
+        margin-top: 11px;
+    }
+}
+
+@media (max-width: 414px) {
+    #phone {
+        margin-top: 50px;
+        margin-right: 20px;
+    }
+    #main_nav {
+        bottom: 60px;
+        right: 20px;
+    }
+    #promocontent {
+        top: 40px;
+        right: 15px;
+        width: 180px;
+    }
+    #services_content h1 {
+        padding-left:10px;
+    }
+
+    .addressline {
+        margin-top:40px;
+    }
+    .emailline {
+        padding-bottom: 20px;
+    }
+
+}
+@media (max-width: 385px) {
+    #main_nav {
+        bottom: 60px;
+        right: 10px;
+        margin-right: 0;
+    }
+    #phone {
+        margin-top: 50px;
+        margin-right: 10px;
+    }
+    #promocontent {
+        top: 20px;
+        right: 15px;
+        width: 180px;
+    }
+}
+@media (max-width: 360px) {
+    #label_gallery {
+        display: none;
+    }
+    #promocontent {
+        top: 10px;
+        right: 15px;
+        width: 180px;
+    }
+}
+@media (max-width: 320px) {
+    #label_gallery {
+        display:none;
+    }
+    .services_note {
+        padding: 40px 10px 100px 10px;
+    }
+
+    #promocontent {
+        top: 10px;
+        right: 8px;
+        width: 144px;
+    }
+
+    #promocontent p {
+        font-size: 10px;
+        line-height: 1.35em !important;
+    }
+
+    a.btn_about_linatey {
+        font-size: 12px;
+        margin-top: 10px;
+        text-align: right;
+    }
+}
+
