@@ -1,0 +1,1045 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="description" content ="CS7 Lab" />
+    <meta name="keywords" content ="CS7" />
+    <meta name="author" content ="" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/mono-blue.css">
+    <link rel="icon" href="/assets/images/favicon.ico">
+
+    
+
+    <title>
+Lab 6: Recursive Objects | CS | CS 7
+</title>
+  </head>
+
+  <body id="index" class="home">
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+Lab 6: Recursive Objects
+
+        
+        <ul class="inline-block list-inline">
+          <li><a href="lab6.zip" class="label label-outline">lab6.zip</a></li>
+        </ul>
+        
+      </h1>
+    </header>
+    
+
+<p><i>Due at 11:59pm on Friday, 03/15/2019.</i></p>
+
+
+
+
+<h2 id='starter-files'>Starter Files</h2>
+
+
+<p>Download <a href="lab6.zip">lab6.zip</a>.
+Inside the archive, you will find starter files for the questions in this lab.</p>
+
+
+<h2 id='submission'>Submission</h2>
+
+<p>By the end of this lab, submit it for checkoff</p>
+
+<ul>
+  <li>To receive credit for this lab, you must complete Questions 2 through 6 in
+  <a href="lab6.py">lab6.py</a> and submit.</li>
+  <li>Questions 7 through 8 are <em>extra practice</em>. They can be found in the
+  <a href="lab6_extra.py">lab6_extra.py</a> file. It is recommended that you complete
+  these problems on your own time.</li>
+</ul>
+
+
+
+    
+<h1 id="topics">Topics</h1>
+
+
+
+        <button id='toggle-1' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Repr and Str<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-1">
+
+<h2 id="repr-and-str">Repr and Str</h2>
+
+<p><em>Created by Xingyu Jin on 03/09/2019</em></p>
+
+
+<h3 id="introduction">Introduction</h3>
+
+
+<p>In the previous lecture, we are introduced to two ways of getting a string representation of an object: str(...) and repr(...).</p>
+
+<p>As in this note, we will explore the difference of these two methods, how to implement them, and why we need them.</p>
+
+<p>Before we jump into analyzing the detailed difference of the two methods, let's take a look at some examples that we commonly see in python, which use the two methods above.</p>
+
+<pre><code>&gt;&gt;&gt; a = 61
+&gt;&gt;&gt; print(a)
+61
+&gt;&gt;&gt; print(str(a))
+61
+&gt;&gt;&gt; print(repr(a))
+61
+&gt;&gt;&gt; s = &#x27;Hello CS 61A!&#x27;
+&gt;&gt;&gt; print(s)
+Hello CS 61A!
+&gt;&gt;&gt; print(str(s))
+Hello CS 61A!
+&gt;&gt;&gt; print(repr(s))
+&#x27;Hello CS 61A!&#x27;</code></pre>
+
+<p>As we can see in the example above, the return values of <code>repr()</code> and <code>str()</code> are identical for an integer, but there's a difference between the return values for a string. In the following section, we will illustrate the difference between the methods with more details.</p>
+
+
+<h3 id="an-overview-table">An Overview Table</h3>
+
+
+
+
+
+        <div class="table-responsive">
+          <table class="table table-bordered">
+          
+  <tr>
+    <th></th>
+    <th><code>str()</code></th>
+    <th><code>repr()</code></th>
+  </tr>
+  <tr>
+    <td>Nick-Name</td>
+    <td>"informal" representation</td>
+    <td>"official" representation</td>
+  </tr>
+  <tr>
+    <td>Goal</td>
+    <td>Be readable</td>
+    <td>Be unambiguous</td>
+  </tr>
+  <tr>
+    <td>Usage</td>
+    <td>Get a quick &amp; human-friendly overview of complicated objects</td>
+    <td>Get the most comprehensive information</td>
+  </tr>
+  <tr>
+    <td>Common example</td>
+    <td>When we call <code>print(...)</code></td>
+    <td>When we directly return and display a variable in the terminal</td>
+  </tr>
+  <tr>
+    <td><code>eval()</code></td>
+    <td>Not executable by <code>eval()</code></td>
+    <td>Can be called as an input to <code>eval()</code>. <br/> For most object types, <code>eval(repr(object)) == object</code></td>
+  </tr>
+  <tr>
+    <td>When to implement</td>
+    <td>Implement it when readability is important</td>
+    <td>Should always implement <code>__repr__</code></td>
+  </tr>
+
+          </table>
+        </div>
+        
+
+
+
+
+<h3 id="example-with-doggies">Example With Doggies! :)</h3>
+
+
+<p>As we can see in the table above, we want to use <code>str()</code> when readability is really important and use <code>repr()</code> when we want to achieve a complete information about an object. To get a better understanding of the two method, it is really important to try them out with solid examples.</p>
+
+<p>Here as an example, let's say we are defining the following <code>Dog</code> class:</p>
+
+<pre><code>class Dog:
+    def __init__(self, color, weight):
+        self.color = color
+        self.weight = weight
+
+puppy = Dog(&#x27;white&#x27;, 10)</code></pre>
+
+<p>In the code section above, we created an object of <code>Dog</code> and stored it in a variable <code>puppy</code>. As we may know from the input, we know this puppy is white and weighs 10kg. However, when we try to print or directly display in terminal, Python will give us a quite confusing representation of the cute puppy:</p>
+
+<pre><code>&gt;&gt;&gt; print(puppy)
+&lt;__main__.Dog object at 0x7fe36e9472e8&gt;
+&gt;&gt;&gt; puppy
+&lt;__main__.Dog object at 0x7fe36e9472e8&gt;</code></pre>
+
+<p>By default all you get is a string containing <strong>the class name</strong> and <strong>the ID</strong> of the object instance (which is the object’s memory address - don't worry about the details).</p>
+
+<p>As human beings, the representation above is really hard to understand and does not give us much useful information. However, it is what/how the object we created actually stored in the computer, and we can easily tell at at a glance whether or not two things are the same object. So this is better than nothing, but it’s also not very useful for our purpose.</p>
+
+<p>When we are trying to print the object, we want to know some of its attributes (color/weight). Therefore, it is common that we may want to do the following printing statement instead:</p>
+
+<pre><code>&gt;&gt;&gt; print(puppy.color, puppy.weight)
+white 10</code></pre>
+
+<p>The underlying idea here is the right and useful one. However, instead of doing the print statement above over and over again, we can take use of conventions and built-in mechanisms Python uses to handle how objects are represented as strings: <code>__str__(self)</code>.</p>
+
+
+<h3 id="how-to-generalize-the-idea-above">How to generalize the idea above?</h3>
+
+
+<p>As we noticed above, we do not want to call the complicated print method over and over to get a more readable representation. Rather, we want to gain useful and readable information once we call <code>print(puppy)</code>. In order to do so, we’re going to add a <strong><code>__str__(self)</code></strong> method to the Dog class we defined earlier:</p>
+
+<pre><code>class Dog:
+    def __init__(self, color, weight):
+        self.color = color
+        self.weight = weight
+
+    def __str__(self):
+        return &#x27;This is a &quot; + self.color + &quot; dog weighing &quot; + self.weight + &quot; kgs.&#x27;
+
+puppy = Dog(&#x27;white&#x27;, 10)</code></pre>
+
+<!-- break up sections -->
+
+<pre><code>&gt;&gt;&gt; print(puppy)
+This is a white dog weighing 10 kgs.</code></pre>
+
+<p>Yeah! After defining the <code>__str__(self)</code> method in our <code>Dog</code> class, now when we can <code>print()</code> on a Dog object, it will give us more human-friendly informations. However, will this change the situation where we directly call the variable and display it in terminal?</p>
+
+<pre><code>&gt;&gt;&gt; puppy
+&gt;&gt;&gt; &lt;__main__.Dog at 0x7fe36e947da0&gt;</code></pre>
+
+<p>As we see, adding <code>__str__(self)</code> method does not change the representation of calling the object directly. That's because in the previous section, we mentioned that calling a variable directly in terminal will actually evoke the <code>__repr__(self)</code> method. Since we did not give <code>Dog</code> a <code>__repr__(self)</code> method, it will still run the default <code>__repr__(self)</code> method, which display its class name and ID.</p>
+
+<p>Here is a simple and interesting experiement that we can use to get a acutal feeling of when <code>__str__(self)</code> or <code>__repr__(self)</code> will be used.</p>
+
+<pre><code>class Dog:
+    def __init__(self, color, weight):
+        self.color = color
+        self.weight = weight
+    def __str__(self):
+        return &#x27;Using __str__&#x27;
+    def __repr__(self):
+        return &#x27;Using __repr__&#x27;
+
+puppy = Dog(&#x27;white&#x27;, 10)</code></pre>
+
+<p>Now, we can try different experiments on this. Feel free to add your one experiement cases for better understanding!</p>
+
+<pre><code>&gt;&gt;&gt; print(puppy)
+Using __str__
+&gt;&gt;&gt; puppy
+Using __repr__
+&gt;&gt;&gt; new_s = &#x27;I have a &#x27; + str(puppy)
+&gt;&gt;&gt; print(new_s)
+I have a Using __str__
+&gt;&gt;&gt; new_s
+&#x27;I have a Using __str__&#x27;
+&gt;&gt;&gt; new_s = &#x27;I have a &#x27; + puppy
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+TypeError: must be str, not Dog</code></pre>
+
+<p>The experiments above experiment confirmed most of the conclusions we made in the first part of this notebook.</p>
+
+<blockquote><p>Interestingly, containers like lists and dicts always use the result of <code>__repr__</code> to represent the objects they contain. Even if you call <code>str()</code> on the container itself:</p>
+
+<pre><code>&gt;&gt;&gt; puppy1 = Dog(&#x27;red&#x27;, 10)
+&gt;&gt;&gt; puppy2 = Dog(&#x27;yellow&#x27;, 20)
+&gt;&gt;&gt; puppy3 = Dog(&#x27;blue&#x27;, 30)
+&gt;&gt;&gt;
+&gt;&gt;&gt; puppyList = [puppy1, puppy2, puppy3]
+&gt;&gt;&gt;
+&gt;&gt;&gt; puppyList
+[Using __repr__, Using __repr__, Using __repr__]
+&gt;&gt;&gt; str(puppyList)
+&#x27;[Using __repr__, Using __repr__, Using __repr__]&#x27;</code></pre></blockquote>
+
+<p>Also, we can manually choose between the <code>__str__(self)__</code> representation and <code>__repr__(self)</code> representation by simply using the built-in <code>str(...)</code> and <code>repr(...)</code> functions. Since this looks much cleaner than the class method and will output the same result, it is preferable to calling <code>self.__str__()</code> or <code>self.__repr__()</code>.</p>
+
+<pre><code>&gt;&gt;&gt; puppy.__str__()
+&#x27;Using __str__&#x27;
+&gt;&gt;&gt; str(puppy)
+&#x27;Using __str__&#x27;
+&gt;&gt;&gt; puppy.__repr__()
+&#x27;Using __repr__&#x27;
+&gt;&gt;&gt; repr(puppy)
+&#x27;Using __repr__&#x27;</code></pre>
+
+
+<h3 id="goal-of-representation">Goal of Representation</h3>
+
+
+
+<h4 id="str"><code>str()</code></h4>
+
+
+<p>We usually use <code>str()</code> for creating outputs for us/users to read. For example, when we call <code>print(...)</code> on any input, it will invoke the class method <code>__str__(self)</code> and display the string representation of the object, which is typically human-friendly. In other word, the <code>__str__(self)</code> method should be readable.</p>
+
+<h4 id="repr"><code>repr()</code></h4>
+
+
+<p>On the other hand, we usually use <code>repr()</code> to compute the official representation of an object. Usually, such representation will contains all information about the object and <strong>is mainly used for debugging and development (mainly for developers)</strong>. The <code>repr()</code> build-in function will invoke the class method <code>__repr__(self)</code>. Typically, when we try to directly display a variable and type it in terminal, the terminal will display us with a <code>repr()</code> representation of the object. In other word, the <code>__repr__(self)</code> method should be unambiguous.</p>
+
+
+<h3 id="example">Example</h3>
+
+
+<p>Now, let's take a look at another example with a built-in python class <code>datetime</code>.
+⁠</p>
+
+<pre><code>&gt;&gt;&gt; import datetime
+&gt;&gt;&gt; today = datetime.datetime(2019, 3, 19, 20, 10)
+&gt;&gt;&gt; print(str(today))
+2019&#x2d;03&#x2d;19 20:10:00
+&gt;&gt;&gt; print(repr(today))   
+datetime.datetime(2019, 3, 19, 20, 10)</code></pre>
+
+<p>As we can see in the example above, the result of calling <code>str(...)</code> is meant to return a <strong>concise textual representation for human, something you’d feel comfortable reading or displaying to a user</strong>.</p>
+
+<p>On the other hand, the result of calling <code>repr(...)</code> is more intended to use for developers' purposes and thus it needs to be <strong>as clear and explicit as possible on illustrating what the object actually is</strong>. As we can see, it not only contains the class name, but also contains which module/package it is in.</p>
+
+
+<h3 id="summary">Summary</h3>
+
+
+<p>Now let's bring up everything together. In this notebook, we explored the difference between <code>str(...)</code> and <code>repr(...)</code>. Notably, <code>str(...)</code> aims at making object more readable, and generate output for users. On the other hand, <code>repr(...)</code> aims at representing the object in an unambiguous way, and generate output for developers.
+</div></p>
+
+<h2 id="linked-lists">Linked Lists</h2>
+
+
+        <button id='toggle-2' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Introduction to Linked Lists<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-2">
+We've learned that a Python list is one way to store sequential values. Another
+type of list is a linked list. A Python list stores all of its elements in a
+single object, and each element can be accessed by using its index. A linked
+list, on the other hand, is a recursive object that only stores two things: its
+first value and a reference to the rest of the list, which is another linked
+list.
+
+<p>We can implement a class, <code>Link</code>, that represents a linked list object.  Each
+instance of <code>Link</code> has two instance attributes, <code>first</code> and <code>rest</code>.</p>
+
+<pre><code>class Link:
+    &quot;&quot;&quot;A linked list.
+
+    &gt;&gt;&gt; s = Link(1)
+    &gt;&gt;&gt; s.first
+    1
+    &gt;&gt;&gt; s.rest is Link.empty
+    True
+    &gt;&gt;&gt; s = Link(2, Link(3, Link(4)))
+    &gt;&gt;&gt; s.first = 5
+    &gt;&gt;&gt; s.rest.first = 6
+    &gt;&gt;&gt; s.rest.rest = Link.empty
+    &gt;&gt;&gt; s                                    # Displays the contents of repr(s)
+    Link(5, Link(6))
+    &gt;&gt;&gt; s.rest = Link(7, Link(Link(8, Link(9))))
+    &gt;&gt;&gt; s
+    Link(5, Link(7, Link(Link(8, Link(9)))))
+    &gt;&gt;&gt; print(s)                             # Prints str(s)
+    &lt;5 7 &lt;8 9&gt;&gt;
+    &quot;&quot;&quot;
+    empty = ()
+
+    def __init__(self, first, rest=empty):
+        assert rest is Link.empty or isinstance(rest, Link)
+        self.first = first
+        self.rest = rest
+
+    def __repr__(self):
+        if self.rest is not Link.empty:
+            rest_repr = &#x27;, &#x27; + repr(self.rest)
+        else:
+            rest_repr = &#x27;&#x27;
+        return &#x27;Link(&#x27; + repr(self.first) + rest_repr + &#x27;)&#x27;
+
+    def __str__(self):
+        string = &#x27;&lt;&#x27;
+        while self.rest is not Link.empty:
+            string += str(self.first) + &#x27; &#x27;
+            self = self.rest
+        return string + str(self.first) + &#x27;&gt;&#x27;</code></pre>
+
+<p>A valid linked list can be one of the following:</p>
+
+<ol>
+  <li>An empty linked list (<code>Link.empty</code>)</li>
+  <li>A <code>Link</code> object containing the first value of the linked list and a
+  reference to the rest of the linked list</li>
+</ol>
+
+<p>What makes a linked list recursive is that the <code>rest</code> attribute of a single
+<code>Link</code> instance is another linked list! In the big picture, each <code>Link</code>
+instance stores a single value of the list.  When multiple <code>Link</code>s are linked
+together through each instance's <code>rest</code> attribute, an entire sequence is
+formed.</p>
+
+<blockquote><p><em>Note</em>: This definition means that the <code>rest</code> attribute of any <code>Link</code>
+instance <em>must</em> be either <code>Link.empty</code> or another <code>Link</code> instance! This is
+enforced in <code>Link.__init__</code>, which raises an <code>AssertionError</code> if the value
+passed in for <code>rest</code> is neither of these things.</p></blockquote>
+
+<p>To check if a linked list is empty, compare it against the class attribute
+<code>Link.empty</code>. For example, the function below prints out whether or not the
+link it is handed is empty:</p>
+
+<pre><code>def test_empty(link):
+    if link is Link.empty:
+        print(&#x27;This linked list is empty!&#x27;)
+    else:
+        print(&#x27;This linked list is not empty!&#x27;)</code></pre>
+
+</div>
+<br>
+
+        <button id='toggle-3' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Motivation for Linked Lists<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-3">
+
+<h3 id="motivation-why-linked-lists">Motivation: Why linked lists</h3>
+
+
+<p>Since you are already familiar with Python's built-in lists, you might be
+wondering why we are teaching you another list representation. There are
+historical reasons, along with practical reasons. Later in the course, you'll
+be programming in Scheme, which is a programming language that uses linked
+lists for almost everything.</p>
+
+<p>For now, let's compare linked lists and Python lists by looking at two common
+sequence operations: inserting an item and indexing.</p>
+
+<p>Python's built-in list is like a sequence of containers with indices on them:</p>
+
+<p><img class="img-responsive center-block" src="assets/arraylist.png" alt="arraylist"></p>
+
+<p>Linked lists are a list of items pointing to their neighbors. Notice that
+there's no explicit index for each item.</p>
+
+<p><img class="img-responsive center-block" src="assets/linkedlist.png" alt="linkedlist"></p>
+
+<p>Suppose we want to add an item at the head of the list.</p>
+
+<ul>
+  <li>With Python's built-in list, if you want to put an item into the container
+  labeled with index 0, you must move <strong>all the items</strong> in the list into
+  its neighbor containers to make room for the first item;</li>
+</ul>
+
+<p><img class="img-responsive center-block" src="assets/arraylist_insert.png" alt="arraylist"></p>
+
+<ul>
+  <li>With a linked list, you tell Python that the neighbor of the new item is the
+  old beginning of the list.</li>
+</ul>
+
+<p><img class="img-responsive center-block" src="assets/linkedlist_insert.png" alt="arraylist"></p>
+
+<p>We can compare the speed of this operation by timing how long it takes to
+insert a large number of items to the beginning of both types of lists. Enter
+the following command in your terminal to test this:</p>
+
+<pre><code>python3 timing.py insert 100000</code></pre>
+
+<p>Now, let's take a look at indexing. Say we want the item at index 3 from a
+list.</p>
+
+<ul>
+  <li>In the built-in list, you can use Python list indexing, e.g. <code>lst[3]</code>, to
+  easily get the item at index 3.</li>
+  <li>In the linked list, you need to start at the first item and repeatedly follow
+  the <code>rest</code> attribute, e.g. <code>link.rest.rest.first</code>. How does this scale if the
+  index you were trying to access was very large?</li>
+</ul>
+
+<p>To test this, enter the following command in your terminal</p>
+
+<pre><code>python3 timing.py index 10000</code></pre>
+
+<p>This program compares the speed of randomly accessing 10,000 items from both a
+linked list and a built-in Python list (each with length 10,000).</p>
+
+<p>What conclusions can you draw from these tests? Can you think of situations
+where you would want to use one type of list over another? In this class, we
+aren't too worried about performance. However, in future computer science
+courses, you'll learn how to make performance tradeoffs in your programs
+by choosing your data structures carefully.
+</div></p>
+
+
+<h2 id="trees-again">Trees (Again)</h2>
+
+
+        <button id='toggle-4' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Object Oriented Trees<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-4">
+Recall that a tree is a recursive abstract data type that has a <code>label</code> (the
+value stored in the root of the tree) and <code>branches</code> (a list of trees directly
+underneath the root).
+
+<p>We saw one way to implement the tree ADT -- using constructor and selector
+functions that treat trees as lists. Another, more formal, way to implement the
+tree ADT is with a class. Here is part of the class definition for <code>Tree</code>,
+which can be found in <code>lab07.py</code>:</p>
+
+<pre><code>class Tree:
+    &quot;&quot;&quot;
+    &gt;&gt;&gt; t = Tree(3, [Tree(2, [Tree(5)]), Tree(4)])
+    &gt;&gt;&gt; t.label
+    3
+    &gt;&gt;&gt; t.branches[0].label
+    2
+    &gt;&gt;&gt; t.branches[1].is_leaf()
+    True
+    &quot;&quot;&quot;
+    def __init__(self, label, branches=[]):
+        for b in branches:
+            assert isinstance(b, Tree)
+        self.label = label
+        self.branches = list(branches)
+
+    def is_leaf(self):
+        return not self.branches</code></pre>
+
+<p>Even though this is a new implementation, everything we know about the tree ADT
+remains true.  That means that solving problems involving trees as objects uses
+the same techniques that we developed when first studying the tree ADT (e.g. we
+can still use recursion on the branches!).  The main difference, aside from
+syntax, is that tree objects are mutable.</p>
+
+<p>Here is a summary of the differences between the tree ADT implemented using
+functions and lists vs. implemented using a class:</p>
+
+
+
+
+        <div class="table-responsive">
+          <table class="table table-bordered">
+          
+  <tr>
+    <th>-</th>
+    <th>Tree constructor and selector functions</th>
+    <th>Tree class</th>
+  </tr>
+  <tr>
+    <td>Constructing a tree</td>
+    <td>To construct a tree given a <code>label</code> and a list of <code>branches</code>, we call <code>tree(label, branches)</code></td>
+    <td>To construct a tree object given a <code>label</code> and a list of <code>branches</code>, we call <code>Tree(label, branches)</code> (which calls the <code>Tree.__init__</code> method)</td>
+  </tr>
+  <tr>
+    <td>Label and branches</td>
+    <td>To get the label or branches of a tree <code>t</code>, we call <code>label(t)</code> or <code>branches(t)</code> respectively</td>
+    <td>To get the label or branches of a tree <code>t</code>, we access the instance attributes <code>t.label</code> or <code>t.branches</code> respectively</td>
+  </tr>
+  <tr>
+    <td>Mutability</td>
+    <td>The tree ADT is immutable because we cannot assign values to call expressions</td>
+    <td>The <code>label</code> and <code>branches</code> attributes of a <code>Tree</code> instance can be reassigned, mutating the tree</td>
+  </tr>
+  <tr>
+    <td>Checking if a tree is a leaf</td>
+    <td>To check whether a tree <code>t</code> is a leaf, we call the convenience function <code>is_leaf(t)</code></td>
+    <td>To check whether a tree <code>t</code> is a leaf, we call the bound method <code>t.is_leaf()</code>. This method can only be called on <code>Tree</code> objects.</td>
+  </tr>
+
+          </table>
+        </div>
+        
+
+
+</div>
+
+
+<h1 id="check-off">Check-Off</h1>
+
+
+<h3 class="question" id="q1">Q1: Junk</h3>
+
+<p>What happens in the following code? Sign up for checkoffs in your lab if you'd like to get credit for this week's checkoff.
+<br/>
+
+<pre><code>&gt;&gt;&gt; class VendingMachine:
+...    v = 0
+...    def __init__(self):
+...        self.soda = JunkDrink(self)
+...
+&gt;&gt;&gt; class JunkDrink:
+...    v = 0
+...    def __init__(self, machine):
+...        self.machine = machine
+...        self.machine.v = self.machine.v + 1
+...        machine.v = machine.v + 1
+...        self.v = self.v + 1
+...</code></pre></p>
+
+<pre><code>&gt;&gt;&gt; a = VendingMachine()
+&gt;&gt;&gt; a.v
+<div class="alt prompt-1">______</div><div class="solution prompt-1">&#x32;</div>
+&gt;&gt;&gt; JunkDrink.v
+<div class="alt prompt-1">______</div><div class="solution prompt-1">&#x30;</div>
+&gt;&gt;&gt; a.soda.v
+<div class="alt prompt-1">______</div><div class="solution prompt-1">&#x31;</div>
+&gt;&gt;&gt; x = VendingMachine.__init__(a)
+&gt;&gt;&gt; x
+<div class="alt prompt-1">______</div><div class="solution prompt-1">&#x4e;&#x6f;&#x6e;&#x65;</div>
+&gt;&gt;&gt; a.v
+<div class="alt prompt-1">______</div><div class="solution prompt-1">&#x34;</div>
+&gt;&gt;&gt; JunkDrink.v
+<div class="alt prompt-1">______</div><div class="solution prompt-1">&#x30;</div>
+&gt;&gt;&gt; a.soda.v
+<div class="alt prompt-1">______</div><div class="solution prompt-1">&#x31;</div></code></pre>
+        <button id='prompt-1' class='btn btn-outline btn-lg solutiontoggle prompt'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+
+<h1 id="required-questions">Required Questions</h1>
+
+
+
+<h2 id="what-would-python-display">What Would Python Display?</h2>
+
+
+<h3 class="question" id="q2">Q2: WWPD: Linked Lists</h3>
+
+<p>Read over the <code>Link</code> class in <code>lab07.py</code>. Make sure you understand the
+doctests.</p>
+
+<blockquote><p>Test your knowledge with the following "What Would Python Display?"
+questions:</p>
+
+
+<p>Enter <code>Function</code> if you believe the answer is <code>&lt;function ...&gt;</code>, <code>Error</code> if it
+errors, and <code>Nothing</code> if nothing is displayed.</p>
+
+<p>If you get stuck, try drawing out the box-and-pointer diagram for the linked
+list on a piece of paper or loading the <code>Link</code> class into the interpreter
+with <code>python3 &#x2d;i lab07.py</code>.</p></blockquote>
+
+<pre><code>&gt;&gt;&gt; from lab07 import *
+&gt;&gt;&gt; link = Link(1000)
+&gt;&gt;&gt; link.first
+<div class="alt prompt-2">______</div><div class="solution prompt-2">&#x31;&#x30;&#x30;&#x30;</div>
+&gt;&gt;&gt; link.rest is Link.empty
+<div class="alt prompt-2">______</div><div class="solution prompt-2">&#x54;&#x72;&#x75;&#x65;</div>
+&gt;&gt;&gt; link = Link(1000, 2000)
+<div class="alt prompt-2">______</div><div class="solution prompt-2">&#x41;&#x73;&#x73;&#x65;&#x72;&#x74;&#x69;&#x6f;&#x6e;&#x45;&#x72;&#x72;&#x6f;&#x72;</div>
+&gt;&gt;&gt; link = Link(1000, Link())
+<div class="alt prompt-2">______</div><div class="solution prompt-2">&#x54;&#x79;&#x70;&#x65;&#x45;&#x72;&#x72;&#x6f;&#x72;</div></code></pre>
+        <button id='prompt-2' class='btn btn-outline btn-lg solutiontoggle prompt'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<pre><code>&gt;&gt;&gt; from lab07 import *
+&gt;&gt;&gt; link = Link(1, Link(2, Link(3)))
+&gt;&gt;&gt; link.first
+<div class="alt prompt-3">______</div><div class="solution prompt-3">&#x31;</div>
+&gt;&gt;&gt; link.rest.first
+<div class="alt prompt-3">______</div><div class="solution prompt-3">&#x32;</div>
+&gt;&gt;&gt; link.rest.rest.rest is Link.empty
+<div class="alt prompt-3">______</div><div class="solution prompt-3">&#x54;&#x72;&#x75;&#x65;</div>
+&gt;&gt;&gt; link.first = 9001
+&gt;&gt;&gt; link.first
+<div class="alt prompt-3">______</div><div class="solution prompt-3">&#x39;&#x30;&#x30;&#x31;</div>
+&gt;&gt;&gt; link.rest = link.rest.rest
+&gt;&gt;&gt; link.rest.first
+<div class="alt prompt-3">______</div><div class="solution prompt-3">&#x33;</div>
+&gt;&gt;&gt; link = Link(1)
+&gt;&gt;&gt; link.rest = link
+&gt;&gt;&gt; link.rest.rest.rest.rest.first
+<div class="alt prompt-3">______</div><div class="solution prompt-3">&#x31;</div>
+&gt;&gt;&gt; link = Link(2, Link(3, Link(4)))
+&gt;&gt;&gt; link2 = Link(1, link)
+&gt;&gt;&gt; link2.first
+<div class="alt prompt-3">______</div><div class="solution prompt-3">&#x31;</div>
+&gt;&gt;&gt; link2.rest.first
+<div class="alt prompt-3">______</div><div class="solution prompt-3">&#x32;</div></code></pre>
+        <button id='prompt-3' class='btn btn-outline btn-lg solutiontoggle prompt'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<pre><code>&gt;&gt;&gt; from lab07 import *
+&gt;&gt;&gt; link = Link(5, Link(6, Link(7)))
+&gt;&gt;&gt; link                  # Look at the __repr__ method of Link
+<div class="alt prompt-4">______</div><div class="solution prompt-4">&#x4c;&#x69;&#x6e;&#x6b;&#x28;&#x35;&#x2c;&#x20;&#x4c;&#x69;&#x6e;&#x6b;&#x28;&#x36;&#x2c;&#x20;&#x4c;&#x69;&#x6e;&#x6b;&#x28;&#x37;&#x29;&#x29;&#x29;</div>
+&gt;&gt;&gt; print(link)          # Look at the __str__ method of Link
+<div class="alt prompt-4">______</div><div class="solution prompt-4">&#x3c;&#x35;&#x20;&#x36;&#x20;&#x37;&#x3e;</div></code></pre>
+        <button id='prompt-4' class='btn btn-outline btn-lg solutiontoggle prompt'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<h3 class="question" id="q3">Q3: WWPD: repr and str</h3>
+
+<blockquote><p>Test your knowledge with the following "What Would Python Display?"
+questions:</p>
+
+
+<p>If you get stuck, try running the examples on the interpreter.</p></blockquote>
+
+<pre><code>&gt;&gt;&gt; print(&quot;hi&quot;)
+<div class="alt prompt-5">______</div><div class="solution prompt-5">&#x68;&#x69;</div>
+&gt;&gt;&gt; &quot;hi&quot;
+<div class="alt prompt-5">______</div><div class="solution prompt-5">&#x27;&#x68;&#x69;&#x27;</div>
+&gt;&gt;&gt; print(repr(&quot;hi&quot;))
+<div class="alt prompt-5">______</div><div class="solution prompt-5">&#x27;&#x68;&#x69;&#x27;</div>
+&gt;&gt;&gt; repr(&quot;hi&quot;)
+<div class="alt prompt-5">______</div><div class="solution prompt-5">&#x22;&#x27;&#x68;&#x69;&#x27;&#x22;</div></code></pre>
+        <button id='prompt-5' class='btn btn-outline btn-lg solutiontoggle prompt'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<pre><code>&gt;&gt;&gt; class A:
+...     def __init__(self, x):
+...         self.x = x
+...     def __repr__(self):
+...         return self.x
+&gt;&gt;&gt; class B(A):
+...     def __str__(self):
+...         return self.x + self.x
+&gt;&gt;&gt; A(&quot;hi&quot;)
+<div class="alt prompt-6">______</div><div class="solution prompt-6">&#x68;&#x69;</div>
+&gt;&gt;&gt; print(A(&quot;hi&quot;))
+<div class="alt prompt-6">______</div><div class="solution prompt-6">&#x68;&#x69;</div>
+&gt;&gt;&gt; B(&quot;hi&quot;)
+<div class="alt prompt-6">______</div><div class="solution prompt-6">&#x68;&#x69;</div>
+&gt;&gt;&gt; print(B(&quot;hi&quot;))
+<div class="alt prompt-6">______</div><div class="solution prompt-6">&#x68;&#x69;&#x68;&#x69;</div></code></pre>
+        <button id='prompt-6' class='btn btn-outline btn-lg solutiontoggle prompt'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<pre><code>&gt;&gt;&gt; class C:
+...     def __str__(self):
+...         print(&#x27;hi&#x27;)
+...         return &#x27;hihi&#x27;
+...     def __repr__(self):
+...         print(&#x27;hihihi&#x27;)
+...         return &#x27;hihihihi&#x27;
+&gt;&gt;&gt; C()
+<div class="alt prompt-7">______</div><div class="solution prompt-7">&#x68;&#x69;&#x68;&#x69;&#x68;&#x69;&#xa;&#x68;&#x69;&#x68;&#x69;&#x68;&#x69;&#x68;&#x69;</div>
+&gt;&gt;&gt; print(C())
+<div class="alt prompt-7">______</div><div class="solution prompt-7">&#x68;&#x69;&#xa;&#x68;&#x69;&#x68;&#x69;</div>
+&gt;&gt;&gt; q = str(C())
+<div class="alt prompt-7">______</div><div class="solution prompt-7">&#x68;&#x69;</div>
+&gt;&gt;&gt; q
+<div class="alt prompt-7">______</div><div class="solution prompt-7">&#x27;&#x68;&#x69;&#x68;&#x69;&#x27;</div>
+&gt;&gt;&gt; r = repr(C())
+<div class="alt prompt-7">______</div><div class="solution prompt-7">&#x68;&#x69;&#x68;&#x69;&#x68;&#x69;</div>
+&gt;&gt;&gt; r
+<div class="alt prompt-7">______</div><div class="solution prompt-7">&#x27;&#x68;&#x69;&#x68;&#x69;&#x68;&#x69;&#x68;&#x69;&#x27;</div></code></pre>
+        <button id='prompt-7' class='btn btn-outline btn-lg solutiontoggle prompt'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+
+<h2 id="coding-practice">Coding Practice</h2>
+
+
+<h3 class="question" id="q4">Q4: Link to List</h3>
+
+<p>Write a function <code>link_to_list</code> that takes in a linked list and returns the
+sequence as a Python list. You may assume that the input list is shallow; none
+of the elements is another linked list.</p>
+
+<p>Try to find both an iterative and recursive solution for this problem!</p>
+
+
+
+<pre><code>def link_to_list(link):
+    &quot;&quot;&quot;Takes a linked list and returns a Python list with the same elements.
+
+    &gt;&gt;&gt; link = Link(1, Link(2, Link(3, Link(4))))
+    &gt;&gt;&gt; link_to_list(link)
+    [1, 2, 3, 4]
+    &gt;&gt;&gt; link_to_list(Link.empty)
+    []
+    &quot;&quot;&quot;
+<div class="alt solution-1">    "*** YOUR CODE HERE ***"
+</div><div class="solution solution-1">&#x20;&#x20;&#x20;&#x20;&#x23;&#x20;&#x52;&#x65;&#x63;&#x75;&#x72;&#x73;&#x69;&#x76;&#x65;&#x20;&#x73;&#x6f;&#x6c;&#x75;&#x74;&#x69;&#x6f;&#x6e;&#xa;&#x20;&#x20;&#x20;&#x20;&#x69;&#x66;&#x20;&#x6c;&#x69;&#x6e;&#x6b;&#x20;&#x69;&#x73;&#x20;&#x4c;&#x69;&#x6e;&#x6b;&#x2e;&#x65;&#x6d;&#x70;&#x74;&#x79;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x5b;&#x5d;&#xa;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x5b;&#x6c;&#x69;&#x6e;&#x6b;&#x2e;&#x66;&#x69;&#x72;&#x73;&#x74;&#x5d;&#x20;&#x2b;&#x20;&#x6c;&#x69;&#x6e;&#x6b;&#x5f;&#x74;&#x6f;&#x5f;&#x6c;&#x69;&#x73;&#x74;&#x28;&#x6c;&#x69;&#x6e;&#x6b;&#x2e;&#x72;&#x65;&#x73;&#x74;&#x29;&#xa;&#xa;&#x23;&#x20;&#x49;&#x74;&#x65;&#x72;&#x61;&#x74;&#x69;&#x76;&#x65;&#x20;&#x73;&#x6f;&#x6c;&#x75;&#x74;&#x69;&#x6f;&#x6e;&#xa;&#x64;&#x65;&#x66;&#x20;&#x6c;&#x69;&#x6e;&#x6b;&#x5f;&#x74;&#x6f;&#x5f;&#x6c;&#x69;&#x73;&#x74;&#x28;&#x6c;&#x69;&#x6e;&#x6b;&#x29;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x73;&#x75;&#x6c;&#x74;&#x20;&#x3d;&#x20;&#x5b;&#x5d;&#xa;&#x20;&#x20;&#x20;&#x20;&#x77;&#x68;&#x69;&#x6c;&#x65;&#x20;&#x6c;&#x69;&#x6e;&#x6b;&#x20;&#x69;&#x73;&#x20;&#x6e;&#x6f;&#x74;&#x20;&#x4c;&#x69;&#x6e;&#x6b;&#x2e;&#x65;&#x6d;&#x70;&#x74;&#x79;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x73;&#x75;&#x6c;&#x74;&#x2e;&#x61;&#x70;&#x70;&#x65;&#x6e;&#x64;&#x28;&#x6c;&#x69;&#x6e;&#x6b;&#x2e;&#x66;&#x69;&#x72;&#x73;&#x74;&#x29;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x6c;&#x69;&#x6e;&#x6b;&#x20;&#x3d;&#x20;&#x6c;&#x69;&#x6e;&#x6b;&#x2e;&#x72;&#x65;&#x73;&#x74;&#xa;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x72;&#x65;&#x73;&#x75;&#x6c;&#x74;&#xa;&#xa;&#x20;&#x20;&#x20;&#x20;&#x23;&#x20;&#x56;&#x69;&#x64;&#x65;&#x6f;&#x20;&#x57;&#x61;&#x6c;&#x6b;&#x74;&#x68;&#x72;&#x6f;&#x75;&#x67;&#x68;&#x3a;&#x20;&#x68;&#x74;&#x74;&#x70;&#x73;&#x3a;&#x2f;&#x2f;&#x79;&#x6f;&#x75;&#x74;&#x75;&#x2e;&#x62;&#x65;&#x2f;&#x68;&#x64;&#x4f;&#x39;&#x52;&#x79;&#x38;&#x64;&#x35;&#x46;&#x55;&#x3f;&#x74;&#x3d;&#x32;&#x35;&#x6d;&#x36;&#x73;</div></code></pre>
+
+
+        <button id='solution-1' class='btn btn-outline btn-lg solutiontoggle solution'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<h3 class="question" id="q5">Q5: Store Digits</h3>
+
+<p>Write a function <code>store_digits</code> that takes in an integer <code>n</code> and returns
+a linked list where each element of the list is a digit of <code>n</code>.</p>
+
+
+
+<pre><code>def store_digits(n):
+    &quot;&quot;&quot;Stores the digits of a positive number n in a linked list.
+
+    &gt;&gt;&gt; s = store_digits(1)
+    &gt;&gt;&gt; s
+    Link(1)
+    &gt;&gt;&gt; store_digits(2345)
+    Link(2, Link(3, Link(4, Link(5))))
+    &gt;&gt;&gt; store_digits(876)
+    Link(8, Link(7, Link(6)))
+    &quot;&quot;&quot;
+<div class="alt solution-2">    "*** YOUR CODE HERE ***"
+</div><div class="solution solution-2">&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x73;&#x75;&#x6c;&#x74;&#x20;&#x3d;&#x20;&#x4c;&#x69;&#x6e;&#x6b;&#x2e;&#x65;&#x6d;&#x70;&#x74;&#x79;&#xa;&#x20;&#x20;&#x20;&#x20;&#x77;&#x68;&#x69;&#x6c;&#x65;&#x20;&#x6e;&#x20;&#x3e;&#x20;&#x30;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x73;&#x75;&#x6c;&#x74;&#x20;&#x3d;&#x20;&#x4c;&#x69;&#x6e;&#x6b;&#x28;&#x6e;&#x20;&#x25;&#x20;&#x31;&#x30;&#x2c;&#x20;&#x72;&#x65;&#x73;&#x75;&#x6c;&#x74;&#x29;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x6e;&#x20;&#x2f;&#x2f;&#x3d;&#x20;&#x31;&#x30;&#xa;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x72;&#x65;&#x73;&#x75;&#x6c;&#x74;</div></code></pre>
+
+
+        <button id='solution-2' class='btn btn-outline btn-lg solutiontoggle solution'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+
+<h3 class="question" id="q6">Q6: Cumulative Sum</h3>
+
+<p>Write a function <code>cumulative_sum</code> that mutates the Tree <code>t</code> so that each node's
+label becomes the sum of all labels in the subtree rooted at the node.</p>
+
+
+
+<pre><code>def cumulative_sum(t):
+    &quot;&quot;&quot;Mutates t so that each node&#x27;s label becomes the sum of all labels in
+    the corresponding subtree rooted at t.
+
+    &gt;&gt;&gt; t = Tree(1, [Tree(3, [Tree(5)]), Tree(7)])
+    &gt;&gt;&gt; cumulative_sum(t)
+    &gt;&gt;&gt; t
+    Tree(16, [Tree(8, [Tree(5)]), Tree(7)])
+    &quot;&quot;&quot;
+<div class="alt solution-3">    "*** YOUR CODE HERE ***"
+</div><div class="solution solution-3">&#x20;&#x20;&#x20;&#x20;&#x66;&#x6f;&#x72;&#x20;&#x62;&#x20;&#x69;&#x6e;&#x20;&#x74;&#x2e;&#x62;&#x72;&#x61;&#x6e;&#x63;&#x68;&#x65;&#x73;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x63;&#x75;&#x6d;&#x75;&#x6c;&#x61;&#x74;&#x69;&#x76;&#x65;&#x5f;&#x73;&#x75;&#x6d;&#x28;&#x62;&#x29;&#xa;&#x20;&#x20;&#x20;&#x20;&#x74;&#x2e;&#x6c;&#x61;&#x62;&#x65;&#x6c;&#x20;&#x3d;&#x20;&#x73;&#x75;&#x6d;&#x28;&#x5b;&#x62;&#x2e;&#x6c;&#x61;&#x62;&#x65;&#x6c;&#x20;&#x66;&#x6f;&#x72;&#x20;&#x62;&#x20;&#x69;&#x6e;&#x20;&#x74;&#x2e;&#x62;&#x72;&#x61;&#x6e;&#x63;&#x68;&#x65;&#x73;&#x5d;&#x29;&#x20;&#x2b;&#x20;&#x74;&#x2e;&#x6c;&#x61;&#x62;&#x65;&#x6c;</div></code></pre>
+
+
+        <button id='solution-3' class='btn btn-outline btn-lg solutiontoggle solution'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+
+<h1 id="optional-questions">Optional Questions</h1>
+
+
+<blockquote><p>The following questions are for <strong>extra practice</strong> -- they can be found
+in the the <a href="lab07_extra.py">lab07_extra.py</a> file. It is recommended
+that you complete these problems on your own time.</p></blockquote>
+
+<h3 class="question" id="q7">Q7: Cycles</h3>
+
+<p>The <code>Link</code> class can represent lists with cycles.  That is, a list may
+contain itself as a sublist.</p>
+
+<pre><code>&gt;&gt;&gt; s = Link(1, Link(2, Link(3)))
+&gt;&gt;&gt; s.rest.rest.rest = s
+&gt;&gt;&gt; s.rest.rest.rest.rest.rest.first
+3</code></pre>
+
+<p>Implement <code>has_cycle</code>,that returns whether its argument, a <code>Link</code>
+instance, contains a cycle.</p>
+
+<blockquote><p><em>Hint</em>: Iterate through the linked list and try keeping track of which <code>Link</code>
+objects you've already seen.</p></blockquote>
+
+
+
+<pre><code>def has_cycle(link):
+    &quot;&quot;&quot;Return whether link contains a cycle.
+
+    &gt;&gt;&gt; s = Link(1, Link(2, Link(3)))
+    &gt;&gt;&gt; s.rest.rest.rest = s
+    &gt;&gt;&gt; has_cycle(s)
+    True
+    &gt;&gt;&gt; t = Link(1, Link(2, Link(3)))
+    &gt;&gt;&gt; has_cycle(t)
+    False
+    &gt;&gt;&gt; u = Link(2, Link(2, Link(2)))
+    &gt;&gt;&gt; has_cycle(u)
+    False
+    &quot;&quot;&quot;
+<div class="alt solution-4">    "*** YOUR CODE HERE ***"
+</div><div class="solution solution-4">&#x20;&#x20;&#x20;&#x20;&#x6c;&#x69;&#x6e;&#x6b;&#x73;&#x20;&#x3d;&#x20;&#x5b;&#x5d;&#xa;&#x20;&#x20;&#x20;&#x20;&#x77;&#x68;&#x69;&#x6c;&#x65;&#x20;&#x6c;&#x69;&#x6e;&#x6b;&#x20;&#x69;&#x73;&#x20;&#x6e;&#x6f;&#x74;&#x20;&#x4c;&#x69;&#x6e;&#x6b;&#x2e;&#x65;&#x6d;&#x70;&#x74;&#x79;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x69;&#x66;&#x20;&#x6c;&#x69;&#x6e;&#x6b;&#x20;&#x69;&#x6e;&#x20;&#x6c;&#x69;&#x6e;&#x6b;&#x73;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x54;&#x72;&#x75;&#x65;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x6c;&#x69;&#x6e;&#x6b;&#x73;&#x2e;&#x61;&#x70;&#x70;&#x65;&#x6e;&#x64;&#x28;&#x6c;&#x69;&#x6e;&#x6b;&#x29;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x6c;&#x69;&#x6e;&#x6b;&#x20;&#x3d;&#x20;&#x6c;&#x69;&#x6e;&#x6b;&#x2e;&#x72;&#x65;&#x73;&#x74;&#xa;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x46;&#x61;&#x6c;&#x73;&#x65;</div></code></pre>
+
+
+        <button id='solution-4' class='btn btn-outline btn-lg solutiontoggle solution'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>As an extra challenge, implement <code>has_cycle_constant</code> with only <a href="http://composingprograms.com/pages/28-efficiency.html#growth-categories">constant space</a>. (If you followed
+the hint above, you will use linear space.) The solution is short (less than 20
+lines of code), but requires a clever idea. Try to discover the solution
+yourself before asking around:</p>
+
+
+
+<pre><code>def has_cycle_constant(link):
+    &quot;&quot;&quot;Return whether link contains a cycle.
+
+    &gt;&gt;&gt; s = Link(1, Link(2, Link(3)))
+    &gt;&gt;&gt; s.rest.rest.rest = s
+    &gt;&gt;&gt; has_cycle_constant(s)
+    True
+    &gt;&gt;&gt; t = Link(1, Link(2, Link(3)))
+    &gt;&gt;&gt; has_cycle_constant(t)
+    False
+    &quot;&quot;&quot;
+<div class="alt solution-5">    "*** YOUR CODE HERE ***"
+</div><div class="solution solution-5">&#x20;&#x20;&#x20;&#x20;&#x69;&#x66;&#x20;&#x6c;&#x69;&#x6e;&#x6b;&#x20;&#x69;&#x73;&#x20;&#x4c;&#x69;&#x6e;&#x6b;&#x2e;&#x65;&#x6d;&#x70;&#x74;&#x79;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x46;&#x61;&#x6c;&#x73;&#x65;&#xa;&#x20;&#x20;&#x20;&#x20;&#x73;&#x6c;&#x6f;&#x77;&#x2c;&#x20;&#x66;&#x61;&#x73;&#x74;&#x20;&#x3d;&#x20;&#x6c;&#x69;&#x6e;&#x6b;&#x2c;&#x20;&#x6c;&#x69;&#x6e;&#x6b;&#x2e;&#x72;&#x65;&#x73;&#x74;&#xa;&#x20;&#x20;&#x20;&#x20;&#x77;&#x68;&#x69;&#x6c;&#x65;&#x20;&#x66;&#x61;&#x73;&#x74;&#x20;&#x69;&#x73;&#x20;&#x6e;&#x6f;&#x74;&#x20;&#x4c;&#x69;&#x6e;&#x6b;&#x2e;&#x65;&#x6d;&#x70;&#x74;&#x79;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x69;&#x66;&#x20;&#x66;&#x61;&#x73;&#x74;&#x2e;&#x72;&#x65;&#x73;&#x74;&#x20;&#x3d;&#x3d;&#x20;&#x4c;&#x69;&#x6e;&#x6b;&#x2e;&#x65;&#x6d;&#x70;&#x74;&#x79;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x46;&#x61;&#x6c;&#x73;&#x65;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x65;&#x6c;&#x69;&#x66;&#x20;&#x66;&#x61;&#x73;&#x74;&#x20;&#x69;&#x73;&#x20;&#x73;&#x6c;&#x6f;&#x77;&#x20;&#x6f;&#x72;&#x20;&#x66;&#x61;&#x73;&#x74;&#x2e;&#x72;&#x65;&#x73;&#x74;&#x20;&#x69;&#x73;&#x20;&#x73;&#x6c;&#x6f;&#x77;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x54;&#x72;&#x75;&#x65;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x65;&#x6c;&#x73;&#x65;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x73;&#x6c;&#x6f;&#x77;&#x2c;&#x20;&#x66;&#x61;&#x73;&#x74;&#x20;&#x3d;&#x20;&#x73;&#x6c;&#x6f;&#x77;&#x2e;&#x72;&#x65;&#x73;&#x74;&#x2c;&#x20;&#x66;&#x61;&#x73;&#x74;&#x2e;&#x72;&#x65;&#x73;&#x74;&#x2e;&#x72;&#x65;&#x73;&#x74;&#xa;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x46;&#x61;&#x6c;&#x73;&#x65;</div></code></pre>
+
+
+        <button id='solution-5' class='btn btn-outline btn-lg solutiontoggle solution'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<h3 class="question" id="q8">Q8: Reverse Other</h3>
+
+<p>Write a function <code>reverse_other</code> that mutates the tree such that <strong>labels</strong> on
+<em>every other</em> (odd-depth) level are reversed. For example,
+<code>Tree(1,[Tree(2, [Tree(4)]), Tree(3)])</code> becomes <code>Tree(1,[Tree(3, [Tree(4)]), Tree(2)])</code>.
+Notice that the nodes themselves are <em>not</em> reversed; only the labels are.</p>
+
+
+
+<pre><code>def reverse_other(t):
+    &quot;&quot;&quot;Mutates the tree such that nodes on every other (odd&#x2d;depth) level
+    have the labels of their branches all reversed.
+
+    &gt;&gt;&gt; t = Tree(1, [Tree(2), Tree(3), Tree(4)])
+    &gt;&gt;&gt; reverse_other(t)
+    &gt;&gt;&gt; t
+    Tree(1, [Tree(4), Tree(3), Tree(2)])
+    &gt;&gt;&gt; t = Tree(1, [Tree(2, [Tree(3, [Tree(4), Tree(5)]), Tree(6, [Tree(7)])]), Tree(8)])
+    &gt;&gt;&gt; reverse_other(t)
+    &gt;&gt;&gt; t
+    Tree(1, [Tree(8, [Tree(3, [Tree(5), Tree(4)]), Tree(6, [Tree(7)])]), Tree(2)])
+    &quot;&quot;&quot;
+<div class="alt solution-6">    "*** YOUR CODE HERE ***"
+</div><div class="solution solution-6">&#x20;&#x20;&#x20;&#x20;&#x64;&#x65;&#x66;&#x20;&#x72;&#x65;&#x76;&#x65;&#x72;&#x73;&#x65;&#x5f;&#x68;&#x65;&#x6c;&#x70;&#x65;&#x72;&#x28;&#x74;&#x2c;&#x20;&#x6e;&#x65;&#x65;&#x64;&#x5f;&#x72;&#x65;&#x76;&#x65;&#x72;&#x73;&#x65;&#x29;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x69;&#x66;&#x20;&#x74;&#x2e;&#x69;&#x73;&#x5f;&#x6c;&#x65;&#x61;&#x66;&#x28;&#x29;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x6e;&#x65;&#x77;&#x5f;&#x6c;&#x61;&#x62;&#x73;&#x20;&#x3d;&#x20;&#x5b;&#x63;&#x68;&#x69;&#x6c;&#x64;&#x2e;&#x6c;&#x61;&#x62;&#x65;&#x6c;&#x20;&#x66;&#x6f;&#x72;&#x20;&#x63;&#x68;&#x69;&#x6c;&#x64;&#x20;&#x69;&#x6e;&#x20;&#x74;&#x2e;&#x62;&#x72;&#x61;&#x6e;&#x63;&#x68;&#x65;&#x73;&#x5d;&#x5b;&#x3a;&#x3a;&#x2d;&#x31;&#x5d;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x66;&#x6f;&#x72;&#x20;&#x69;&#x20;&#x69;&#x6e;&#x20;&#x72;&#x61;&#x6e;&#x67;&#x65;&#x28;&#x6c;&#x65;&#x6e;&#x28;&#x74;&#x2e;&#x62;&#x72;&#x61;&#x6e;&#x63;&#x68;&#x65;&#x73;&#x29;&#x29;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x63;&#x68;&#x69;&#x6c;&#x64;&#x20;&#x3d;&#x20;&#x74;&#x2e;&#x62;&#x72;&#x61;&#x6e;&#x63;&#x68;&#x65;&#x73;&#x5b;&#x69;&#x5d;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x76;&#x65;&#x72;&#x73;&#x65;&#x5f;&#x68;&#x65;&#x6c;&#x70;&#x65;&#x72;&#x28;&#x63;&#x68;&#x69;&#x6c;&#x64;&#x2c;&#x20;&#x6e;&#x6f;&#x74;&#x20;&#x6e;&#x65;&#x65;&#x64;&#x5f;&#x72;&#x65;&#x76;&#x65;&#x72;&#x73;&#x65;&#x29;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x69;&#x66;&#x20;&#x6e;&#x65;&#x65;&#x64;&#x5f;&#x72;&#x65;&#x76;&#x65;&#x72;&#x73;&#x65;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x63;&#x68;&#x69;&#x6c;&#x64;&#x2e;&#x6c;&#x61;&#x62;&#x65;&#x6c;&#x20;&#x3d;&#x20;&#x6e;&#x65;&#x77;&#x5f;&#x6c;&#x61;&#x62;&#x73;&#x5b;&#x69;&#x5d;&#xa;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x76;&#x65;&#x72;&#x73;&#x65;&#x5f;&#x68;&#x65;&#x6c;&#x70;&#x65;&#x72;&#x28;&#x74;&#x2c;&#x20;&#x54;&#x72;&#x75;&#x65;&#x29;</div></code></pre>
+
+
+        <button id='solution-6' class='btn btn-outline btn-lg solutiontoggle solution'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="#topics">Topics</a></li>
+  <ul>
+    <li><a href="#repr-and-str">Repr and Str</a></li>
+    <ul>
+      <li><a href="#introduction">Introduction</a></li>
+      <li><a href="#an-overview-table">An Overview Table</a></li>
+      <li><a href="#example-with-doggies">Example With Doggies! :)</a></li>
+      <li><a href="#how-to-generalize-the-idea-above">How to generalize the idea above?</a></li>
+      <li><a href="#goal-of-representation">Goal of Representation</a></li>
+      <ul>
+        <li><a href="#str"><code>str()</code></a></li>
+        <li><a href="#repr"><code>repr()</code></a></li>
+      </ul>
+      <li><a href="#example">Example</a></li>
+      <li><a href="#summary">Summary</a></li>
+    </ul>
+    <li><a href="#linked-lists">Linked Lists</a></li>
+    <ul>
+      <li><a href="#motivation-why-linked-lists">Motivation: Why linked lists</a></li>
+    </ul>
+    <li><a href="#trees-again">Trees (Again)</a></li>
+  </ul>
+  <li><a href="#check-off">Check-Off</a></li>
+  <ul>
+    <li><a href="#q1">Q1: Junk</a></li>
+  </ul>
+  <li><a href="#required-questions">Required Questions</a></li>
+  <ul>
+    <li><a href="#what-would-python-display">What Would Python Display?</a></li>
+    <ul>
+      <li><a href="#q2">Q2: WWPD: Linked Lists</a></li>
+      <li><a href="#q3">Q3: WWPD: repr and str</a></li>
+    </ul>
+    <li><a href="#coding-practice">Coding Practice</a></li>
+    <ul>
+      <li><a href="#q4">Q4: Link to List</a></li>
+      <li><a href="#q5">Q5: Store Digits</a></li>
+      <li><a href="#q6">Q6: Cumulative Sum</a></li>
+    </ul>
+  </ul>
+  <li><a href="#optional-questions">Optional Questions</a></li>
+  <ul>
+    <li><a href="#q7">Q7: Cycles</a></li>
+    <li><a href="#q8">Q8: Reverse Other</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+</script>
+
+
+<script type="text/javascript" src="/assets/js/config.js"></script>
+<script>
+/*
+This code is duplicated in lab-check-in.html. Doesn't work if we move it to a separate
+file because of JQuery document ready concurrency issues.
+*/
+$(function() {
+  var release_solutions = true;
+
+  if (release_solutions) {
+    $('.solutiontoggle').css('display', 'inline-block');
+    $('.solutiontoggle').click(function() {
+      var solution_id = $(this).attr('id');
+      $('div.' + solution_id).slideToggle(600);
+    });
+  }
+  $('.alwaystoggle').css('display', 'inline-block');
+  $('.alwaystoggle').click(function() {
+    var solution_id = $(this).attr('id');
+    $('div.' + solution_id).slideToggle(600);
+  });
+});
+</script>
+
+
+  </body>
+</html>
