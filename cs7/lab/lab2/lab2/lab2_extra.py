@@ -3,6 +3,7 @@
 name = ""
 surname = ""
 assignment = "lab2_extra"
+
 # While Loops
 
 def falling(n, k):
