@@ -1,0 +1,249 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="description" content ="CS 7: Introduction to Programming and Computer Science" />
+    <meta name="keywords" content ="CS 7, Computer Science, CS, Emzini weCode, Programming" />
+    <meta name="author" content ="Hany Farid, John DeNero" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/assets/js/hl.js"></script>
+    <script>
+        // we aren't registering builtins since
+        //      (1) they don't render differently in the current CSS from other names
+        //      (2) it's a mess to list all of them. You can extract from the site but that takes effort
+        // if (1) ceases to be true, (2) might be worth the effort. For now, we're leaving as is
+        hljsRegister({
+            'keyword': "define if cond and or let begin lambda mu quote delay cons-stream set! quasiquote unquote unquote-splicing define-macro"
+        });
+        hljs.initHighlightingOnLoad();
+    </script>
+    <script src="/assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/mono-blue.css">
+    <link rel="icon" href="/assets/images/favicon.ico">
+
+    
+
+    <title>
+Sublime Text | CS 7 Fall 2020
+</title>
+  </head>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>Sublime Text</h1>
+    </header>
+     <h2 id="introduction">Introduction</h2>
+
+
+<p>Sublime is a friendly text editor known for its slick user interface,
+numerous features, and snappy performance that provides a combination
+of many amazing features from modern text editors (and more)!</p>
+
+<p>Sublime is easy to use, and extremely fun to master (I mean, who
+doesn't want to use multiple cursors in vim mode while -- you get the
+picture, do things with CS words that don't quite make sense right
+now). This guide will get you started with Sublime, with a few basics
+and essential tools for your workflow in CS61A. If there's something
+you want Sublime to do, it's likely possible! A quick Google search
+will probably show you a plugin you can install to extend Sublime's
+functionality.</p>
+
+
+<h2 id="getting-sublime-on-your-own-computer">Getting Sublime on your own computer</h2>
+
+
+<p>Visit <a href="http://www.sublimetext.com/">Sublime's website</a> and follow the
+instructions to install it on your computer.</p>
+
+
+<h2 id="example-greet-py">Example: <code>greet.py</code></h2>
+
+
+<p>By now, you should have Sublime installed. You have the option
+of either finding the Application or opening it up from the terminal.
+Recall from <a href="../lab/lab1/">Lab 1</a> that you can open a terminal on the school
+computers by pressing <code>Ctrl&#x2d;Alt&#x2d;t</code>.</p>
+
+<p>Let's first create and navigate to a directory called <code>example</code>, using
+the UNIX commands you learned in <a href="../lab/lab1/">Lab 1</a>:</p>
+
+<pre><code>mkdir ~/example
+cd ~/example</code></pre>
+
+
+<h3 id="opening-files">Opening files</h3>
+
+
+<p>Now let's open up Sublime!</p>
+
+<blockquote class="help-Mac">
+
+<p>For Mac users, you'll most likely find Sublime in your <code>Applications</code>.</p>
+
+</blockquote>
+
+<blockquote class="help-Mac">
+
+<p>For Ubuntu users, you'll most likely find Sublime by putting it in the search
+bar.</p>
+
+</blockquote>
+
+<blockquote class="help-Windows">
+
+<p>For Windows users, you'll most likely find Sublime in your
+<code>Program Files</code>.</p>
+
+</blockquote>
+
+<p>Sublime will open up to a blank file. We can start writing our program!</p>
+
+<p><img class="img-responsive center-block" src="../assets/sublime-blank.png" alt="blank sublime"></p>
+
+
+<h3 id="editing-files">Editing files</h3>
+
+
+<p>Now we have Sublime open, we can begin writing our first Python file.
+We'll be writing a short program that prints out a greeting when
+executed. Don't worry, we don't expect you to know any Python yet! All
+you have to do is type in the following:</p>
+
+<pre><code>def greet(name):
+    print(&#x27;Hi&#x27;, name, &#x27;, how are you doing?&#x27;)
+    print(&#x27; &#x2d; Python&#x27;)</code></pre>
+
+<p>Once you've finished typing, Sublime should look something like this:</p>
+
+<p><img class="img-responsive center-block" src="../assets/sublime-greet-function.png" alt="Greet function"></p>
+
+<p>To save, you can just type <code>Ctrl&#x2d;s</code>. If you haven't already, save
+this file as <code>greet.py</code>.</p>
+
+
+<h3 id="spaces-and-tabs">Spaces and tabs</h3>
+
+
+<p>By default, Python outputs a <em>tab</em> character (<code>\t</code>) when you press the tab key.
+However, for this class we want to indent our code using spaces.
+Check "View > Indentation > Indent Using Spaces" to make Sublime output 4 spaces
+whenever you press the tab key.</p>
+
+
+<h3 id="running-python">Running Python</h3>
+
+
+<p>Back in our terminal, we're currently in our <code>example</code> directory.
+Let's play around with our code. In the terminal, start by typing</p>
+
+<pre><code>python3 &#x2d;i greet.py</code></pre>
+
+<p>This command does the following:</p>
+
+<ol>
+  <li><code>python3</code> is the command that starts Python</li>
+  <li>The <code>&#x2d;i</code> flag tells Python to start in <strong>interactive mode</strong>, which
+  allows you to type in Python commands from your terminal</li>
+  <li><code>greet.py</code> is the name of the Python file we want to load</li>
+</ol>
+
+<p>Notice that the Python interpreter says <code>&gt;&gt;&gt;</code>. This means Python is
+ready to take a command.</p>
+
+<p>Recall that we defined a function called <code>greet</code>. Let's see what it
+does! Type in the following:</p>
+
+<pre><code>&gt;&gt;&gt; greet(&#x27;Michelle&#x27;)</code></pre>
+
+<p>Python will then print out</p>
+
+<pre><code>Hi Michelle, how are you doing?
+ &#x2d; Python</code></pre>
+
+<p>Our code works! Let's close Python by typing in</p>
+
+<pre><code>&gt;&gt;&gt; exit()</code></pre>
+
+<blockquote><p>There are a couple of ways to exit Python. You can type in <code>exit()</code>
+or <code>quit()</code>. On MacOS and Linux, you can also type in <code>Ctrl&#x2d;d</code> (this
+doesn't work on Windows).</p></blockquote>
+
+<p>Congratulations, you've edited your first file in Sublime!</p>
+
+
+<h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
+
+
+<p>Sublime has a some swell keyboard shortcuts. Here are a few useful
+ones!  (for Mac users, replace all the <code>Ctrl</code> sequences with <code>cmd</code>)</p>
+
+<ul>
+  <li><code>Ctrl&#x2d;s</code> : saves the current file</li>
+  <li><code>Ctrl&#x2d;x</code> : cuts the entire line your cursor is on</li>
+  <li><code>Ctrl&#x2d;v</code> : pastes the entire line you cut in the line above your
+  cursor OR pastes the selected text in place</li>
+  <li><code>Ctrl&#x2d;z</code> : undo</li>
+  <li><code>Ctrl&#x2d;y</code> : redo</li>
+  <li><code>Ctrl&#x2d;[</code> : indent a line or a group of lines</li>
+  <li><code>Ctrl&#x2d;]</code> : dedent a line or a group of lines</li>
+  <li><code>Ctrl&#x2d;d</code> (my favorite!): highlights the current word. For every
+  'Ctrl-d' you type after this first word, it will highlight every next
+  instance of the word. This allows you to easily rename variables with
+  multiple cursors! (Play around with this one, it's fun!)</li>
+  <li><code>Ctrl&#x2d;tab</code> : moves you to the next tab</li>
+  <li><code>Ctrl&#x2d;shift&#x2d;tab</code> : moves you to the previous tab</li>
+  <li><code>Ctrl&#x2d;f</code> : search for a word</li>
+  <li><code>Ctrl&#x2d;shift&#x2d;f</code> : searches through all tabs</li>
+  <li><code>Ctrl&#x2d;shift&#x2d;p</code> : This one's important. This opens up a little panel
+  of tools! You can do things like type "ss python" which will set the
+  syntax of your file to Python or "reindent" will help you reindent a
+  file you paste in (this will be helpful in future labs!)</li>
+</ul>
+
+<p><img class="img-responsive center-block" src="../assets/sublime-control-panel.png" alt="Control Panel"></p>
+
+<p>This guide only scratches the surface of Sublime's
+functionality. Remember, if there's something you wish Sublime could
+do, it probably can! Just Google it!</p>
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="#introduction">Introduction</a></li>
+  <li><a href="#getting-sublime-on-your-own-computer">Getting Sublime on your own computer</a></li>
+  <li><a href="#example-greet-py">Example: <code>greet.py</code></a></li>
+  <ul>
+    <li><a href="#opening-files">Opening files</a></li>
+    <li><a href="#editing-files">Editing files</a></li>
+    <li><a href="#spaces-and-tabs">Spaces and tabs</a></li>
+    <li><a href="#running-python">Running Python</a></li>
+  </ul>
+  <li><a href="#keyboard-shortcuts">Keyboard Shortcuts</a></li>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>    
+
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+</script>
+
+  </body>
+</html>
