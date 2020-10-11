@@ -1,0 +1,170 @@
+What Would Python Display?
+Q1: WWPD: Lambda the Free
+
+
+>>> lambda x: x  # A lambda expression with one parameter x
+______
+
+>>> a = lambda x: x  # Assigning the lambda function to the name a
+>>> a(5)
+______
+
+>>> (lambda: 3)()  # Using a lambda expression as an operator in a call exp.
+______
+
+>>> b = lambda x: lambda: x  # Lambdas can return other lambdas!
+>>> c = b(88)
+>>> c
+______
+
+>>> c()
+______
+
+>>> d = lambda f: f(4)  # They can have functions as arguments as well.
+>>> def square(x):
+...     return x * x
+>>> d(square)
+______
+
+*****************************************************************************
+
+>>> z = 3
+>>> e = lambda x: lambda y: lambda: x + y + z
+>>> e(0)(1)()
+______
+
+>>> f = lambda z: x + z
+>>> f(3)
+______
+
+*****************************************************************************
+
+>>> higher_order_lambda = lambda f: lambda x: f(x)
+>>> g = lambda x: x * x
+>>> higher_order_lambda(2)(g)  # Which argument belongs to which function call?
+______
+
+>>> higher_order_lambda(g)(2)
+______
+
+>>> call_thrice = lambda f: lambda x: f(f(f(x)))
+>>> call_thrice(lambda y: y + 1)(0)
+______
+
+>>> print_lambda = lambda z: print(z)  # When is the return expression of a lambda expression executed?
+>>> print_lambda
+______
+
+>>> one_thousand = print_lambda(1000)
+______
+
+>>> one_thousand
+______
+
+*****************************************************************************
+
+>>> bar = lambda y: lambda x: pow(x, y)
+>>> bar()(15)
+______
+
+>>> foo = lambda: 32
+>>> foobar = lambda x, y: x // y
+>>> a = lambda x: foobar(foo(), bar(4)(x))
+>>> a(2)
+______
+
+>>> b = lambda x, y: print('summer')
+______
+
+>>> c = b(4, 'dog')
+______
+
+>>> print(c)
+______
+
+*****************************************************************************
+
+>>> a = lambda b: b * 2
+______
+
+>>> a
+______
+
+>>> a(a(a()))
+______
+
+>>> a(a(a(2)))
+______
+
+>>> def d():
+...     print(None)
+...     print('whoo')
+>>> b = d()
+______
+
+>>> b
+______
+
+****************************************************************************
+
+Q2: WWPD: Higher Order Functions
+
+>>> def even(f):
+...     def odd(x):
+...         if x < 0:
+...             return f(-x)
+...         return f(x)
+...     return odd
+>>> steven = lambda x: x
+>>> stewart = even(steven)
+>>> stewart
+______
+
+>>> stewart(61)
+______
+
+>>> stewart(-4)
+______
+
+****************************************************************************
+
+>>> def cake():
+...    print('beets')
+...    def pie():
+...        print('sweets')
+...        return 'cake'
+...    return pie
+>>> chocolate = cake()
+______
+
+>>> chocolate
+______
+
+>>> chocolate()
+______
+
+>>> more_chocolate, more_cake = chocolate(), cake
+______
+
+>>> more_chocolate
+______
+
+>>> def snake(x, y):
+...    if cake == more_cake:
+...        return lambda: x + y
+...    else:
+...        return x + y
+>>> snake(10, 20)
+______
+
+>>> snake(10, 20)()
+______
+
+>>> cake = 'cake'
+>>> snake(10, 20)
+______
+
+****************************************************************************
+
+
+
